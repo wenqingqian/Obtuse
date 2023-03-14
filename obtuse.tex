@@ -1,7 +1,7 @@
 \documentclass[10pt,twoside]{ctexbook}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{url}
+\usepackage{hyperref}
 \usepackage{xeCJK}
 \usepackage{xeCJKfntef}
 \usepackage{listings}
@@ -46,7 +46,7 @@
 \setCJKmainfont{STLibianSC-Regular}
 %
 \setmainfont{Times New Roman}
-
+\hypersetup{colorlinks=true,filecolor=purple,linkcolor=black,urlcolor=purple}%链接颜色
 \CTEXsetup[format={\Large\bfseries}]{section}	% 标题右对齐
 \pagestyle{fancy}
 \thispagestyle{empty}	% 去除页眉
@@ -84,6 +84,13 @@
 	extendedchars=false %解决代码跨页时,章节标题,页眉等汉字不显示的问题
 }
 
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{3}
+%标题显示深度
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
 
 \begin{document}
 \footnotelayout{m}
