@@ -34,3 +34,4 @@
 #tex
 *.aux
 *.gz
+*.synctex.*
