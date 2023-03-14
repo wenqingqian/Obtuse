@@ -34,4 +34,6 @@
 #tex
 *.aux
 *.gz
-*.synctex.*
+*.synctex.gz
+obtuse.synctex.gz
+obtuse.aux
