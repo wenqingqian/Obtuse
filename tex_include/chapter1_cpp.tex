@@ -5,16 +5,21 @@
 \thispagestyle{fancy}
 %--------------------Setting------------------------------------%
 
-\section[基础]{\color{blue}{基础}}
-\subsection[ISOK:{\tt C}和{\tt C++}区别]{\color{purple}{{\tt C}和{\tt C++}区别}}
-\begin{itemize}
-	\item {\tt C}语言是{\tt C++}的子集, {\tt C++}可以很好兼容{\tt C}语言. 但是{\tt C++}又有很多新特性, 如引用、智能指针、{\tt auto}变量等
-	\item {\tt C++}是面对对象的编程语言; {\tt C}语言是面对过程的编程语言
-	\item {\tt C}语言有一些不安全的语言特性, 如指针使用的潜在危险、强制转换的不确定性、内存泄露等. 而{\tt C++}对此增加了不少新特性来改善安全性, 如{\tt const}常量、引用、{\tt cast}转换、智能指针、{\tt try—catch}等等
-	\item {\tt C++}可复用性高, {\tt C++}引入了模板的概念, 后面在此基础上, 实现了方便开发的标准模板库{\tt STL}. {\tt C++}的{\tt STL}库相对于{\tt C}语言的函数库更灵活、更通用
-\end{itemize}
+\section{\color{blue}{基础}}
 
-\subsection[ISOK:{\tt C++}从代码到可执行二进制文件的过程]{\color{purple}{{\tt C++}从代码到可执行二进制文件的过程}}
+\subsection{ISOK:\color{purple}{{\tt C}和{\tt C++}区别}}
+
+\begin{enumerate}
+	\item {\tt C}语言是{\tt C++}的子集, {\tt C++}可以很好兼容{\tt C}语言. 但是{\tt C++}又有很多新特性, 
+			如引用、智能指针、{\tt auto}变量等
+	\item {\tt C++}是面对对象的编程语言; {\tt C}语言是面对过程的编程语言
+	\item {\tt C}语言有一些不安全的语言特性, 如指针使用的潜在危险、强制转换的不确定性、内存泄露等. 
+			而{\tt C++}对此增加了不少新特性来改善安全性, 如{\tt const}常量、引用、{\tt cast}转换、智能指针、
+			{\tt try—catch}等等
+	\item {\tt C++}可复用性高, {\tt C++}引入了模板的概念, 后面在此基础上, 实现了方便开发的标准模板库{\tt STL}. 
+			{\tt C++}的{\tt STL}库相对于{\tt C}语言的函数库更灵活、更通用
+\end{enumerate}
+\subsection{ISOK:\color{purple}{{\tt C++}从代码到可执行二进制文件的过程}}
 \begin{enumerate}
 	\item 预编译: 这个过程主要的处理操作如下
 	\begin{enumerate}
@@ -45,7 +50,7 @@
 				生成的动态链接库, {\tt Windows}下以{\tt .dll}为后缀, {\tt Linux}下以{\tt .so}为后缀
 	\end{itemize}
 \end{enumerate}
-\subsection[ISOK:{\tt static}关键字]{\color{purple}{{\tt static}关键字}}
+\subsection{ISOK:\color{purple}{{\tt static}关键字}}
 \begin{enumerate}
 	\item 全局静态变量和局部静态变量: 初始化的静态变量会在数据段分配内存, 未初始化的静态变量会在{\tt BSS}段分配内存. 
 			直到程序结束, 静态变量始终会维持前值. 只不过全局静态变量和局部静态变量的作用域不一样
@@ -60,65 +65,11 @@
 			既然它没有指向某一对象, 也就无法对一个对象中的非静态成员进行访问
 \end{enumerate}
 
-\subsection[ISOK:{\tt extern}关键字与链接性]{\color{purple}{{\tt extern}关键字与链接性}}
+\subsection{ISOK:\color{purple}{{\tt extern}关键字与链接性}}
 
 在{\tt C++}中, 翻译单元由实现文件及直接或间接包含的所有标头组成
 
-\begin{center}
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Rounded Rect [id:dp8046212658933671] 
-\draw   (119,83) .. controls (119,79.13) and (122.13,76) .. (126,76) -- (196,76) .. controls (199.87,76) and (203,79.13) .. (203,83) -- (203,104) .. controls (203,107.87) and (199.87,111) .. (196,111) -- (126,111) .. controls (122.13,111) and (119,107.87) .. (119,104) -- cycle ;
-%Rounded Rect [id:dp4131717476038639] 
-\draw   (57,163) .. controls (57,159.13) and (60.13,156) .. (64,156) -- (134,156) .. controls (137.87,156) and (141,159.13) .. (141,163) -- (141,184) .. controls (141,187.87) and (137.87,191) .. (134,191) -- (64,191) .. controls (60.13,191) and (57,187.87) .. (57,184) -- cycle ;
-%Rounded Rect [id:dp6275602235598181] 
-\draw   (193,164) .. controls (193,160.13) and (196.13,157) .. (200,157) -- (270,157) .. controls (273.87,157) and (277,160.13) .. (277,164) -- (277,185) .. controls (277,188.87) and (273.87,192) .. (270,192) -- (200,192) .. controls (196.13,192) and (193,188.87) .. (193,185) -- cycle ;
-%Straight Lines [id:da29892507643017163] 
-\draw    (137,117) -- (98.49,151.66) ;
-\draw [shift={(97,153)}, rotate = 318.01] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Straight Lines [id:da7604434249637251] 
-\draw    (184,119) -- (231.36,151.86) ;
-\draw [shift={(233,153)}, rotate = 214.76] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Rounded Rect [id:dp8118464469584348] 
-\draw   (439,165) .. controls (439,161.13) and (442.13,158) .. (446,158) -- (516,158) .. controls (519.87,158) and (523,161.13) .. (523,165) -- (523,186) .. controls (523,189.87) and (519.87,193) .. (516,193) -- (446,193) .. controls (442.13,193) and (439,189.87) .. (439,186) -- cycle ;
-%Rounded Rect [id:dp6893102005714937] 
-\draw   (323,166) .. controls (323,162.13) and (326.13,159) .. (330,159) -- (400,159) .. controls (403.87,159) and (407,162.13) .. (407,166) -- (407,187) .. controls (407,190.87) and (403.87,194) .. (400,194) -- (330,194) .. controls (326.13,194) and (323,190.87) .. (323,187) -- cycle ;
-%Rounded Rect [id:dp2970948370150095] 
-\draw   (322,131) .. controls (322,127.13) and (325.13,124) .. (329,124) -- (399,124) .. controls (402.87,124) and (406,127.13) .. (406,131) -- (406,152) .. controls (406,155.87) and (402.87,159) .. (399,159) -- (329,159) .. controls (325.13,159) and (322,155.87) .. (322,152) -- cycle ;
-%Rounded Rect [id:dp3048285006841027] 
-\draw   (439,130) .. controls (439,126.13) and (442.13,123) .. (446,123) -- (516,123) .. controls (519.87,123) and (523,126.13) .. (523,130) -- (523,151) .. controls (523,154.87) and (519.87,158) .. (516,158) -- (446,158) .. controls (442.13,158) and (439,154.87) .. (439,151) -- cycle ;
-%Straight Lines [id:da8496668043021236] 
-\draw    (416,59) -- (371.53,96.71) ;
-\draw [shift={(370,98)}, rotate = 319.71] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Straight Lines [id:da057864555520047656] 
-\draw    (416,59) -- (471.36,97.85) ;
-\draw [shift={(473,99)}, rotate = 215.06] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-
-% Text Node
-\draw (137,85) node [anchor=north west][inner sep=0.75pt]   [align=left] {head.h};
-% Text Node
-\draw (71,165) node [anchor=north west][inner sep=0.75pt]   [align=left] {main.cpp};
-% Text Node
-\draw (206,166) node [anchor=north west][inner sep=0.75pt]   [align=left] {head.cpp};
-% Text Node
-\draw (452,167) node [anchor=north west][inner sep=0.75pt]   [align=left] {head.cpp};
-% Text Node
-\draw (337,168) node [anchor=north west][inner sep=0.75pt]   [align=left] {main.cpp};
-% Text Node
-\draw (340,133) node [anchor=north west][inner sep=0.75pt]   [align=left] {head.h};
-% Text Node
-\draw (457,132) node [anchor=north west][inner sep=0.75pt]   [align=left] {head.h};
-% Text Node
-\draw (346,100) node [anchor=north west][inner sep=0.75pt]   [align=left] {main};
-% Text Node
-\draw (460,101) node [anchor=north west][inner sep=0.75pt]   [align=left] {head};
-
-
-\end{tikzpicture}
-\end{center}
+\input{tex_include/pic_tex_include/cpp_basic_extern_0.tex}
 
 \noindent 每个翻译单元由编译器单独编译, 最终将得到的.o文件链接得到可执行文件. 如上图所示程序结构, 在链接时会出现如下问题:
 
@@ -131,29 +82,8 @@ int i = 0;
 \end{lstlisting}
 那么在链接时就会出错, 原因是如上两个翻译单元相当于
 
-\begin{center}
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\input{tex_include/pic_tex_include/cpp_basic_extern_1.tex}
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Rounded Rect [id:dp31960853174211556] 
-\draw   (225,159.2) .. controls (225,152.46) and (230.46,147) .. (237.2,147) -- (301.8,147) .. controls (308.54,147) and (314,152.46) .. (314,159.2) -- (314,195.8) .. controls (314,202.54) and (308.54,208) .. (301.8,208) -- (237.2,208) .. controls (230.46,208) and (225,202.54) .. (225,195.8) -- cycle ;
-%Rounded Rect [id:dp47295061263468985] 
-\draw   (338,159.2) .. controls (338,152.46) and (343.46,147) .. (350.2,147) -- (414.8,147) .. controls (421.54,147) and (427,152.46) .. (427,159.2) -- (427,195.8) .. controls (427,202.54) and (421.54,208) .. (414.8,208) -- (350.2,208) .. controls (343.46,208) and (338,202.54) .. (338,195.8) -- cycle ;
-
-% Text Node
-\draw (251,118) node [anchor=north west][inner sep=0.75pt]   [align=left] {main};
-% Text Node
-\draw (363,119) node [anchor=north west][inner sep=0.75pt]   [align=left] {head};
-% Text Node
-\draw (234,158) node [anchor=north west][inner sep=0.75pt]   [align=left] {int i = 0;\\int main()\{\}};
-% Text Node
-\draw (351,159.2) node [anchor=north west][inner sep=0.75pt]   [align=left] {int i = 0;\\head.cpp};
-
-
-\end{tikzpicture}
-\end{center}
 在两个文件中都定义了具有外部链接性的变量i.
 
 在一个作用域内, 变量能且只能被定义一次, 但是可以被多次声明({\tt one define rule})
@@ -210,7 +140,7 @@ extern int v;
 所有文件中的声明会传递给链接器得到一张未解决符号表, 记录本编译单元有声明但不在本单元定义的符号及其对应的地址, 
 	显然在导出符号表中不能存在相同的符号.
 
-{\tt C11}标准关于{\tt static}和{\tt extern}的内容:
+\noindent{\tt C11}标准关于{\tt static}和{\tt extern}的内容:
 \begin{enumerate}
 	\item 若在{\tt extern}声明标识符之前的可见范围内存在对该标识符的声明, 则该标识符的链接与先前声明相同. 
 			若无先前声明, 或声明无链接, 则该标识符具有外部链接
@@ -229,58 +159,58 @@ linkage.
 If, within a translation unit, the same identifier appears with both internal 
 and external linkage, the behavior is undefined.}
 
-\subsection[指针与引用]{\color{purple}{指针与引用}}
+\subsection{ISOK:\color{purple}{指针与引用}}
 \subsubsection{指针与引用的区别}
 \begin{enumerate}
-	\item 引用就是常量指针.
-	\item 引用必须初始化, 且不能改变指向.
-	\item 无法对引用进行取地址, 或者说只能取到引用指向的对象的地址.
-	\item 引用的解引用操作由编译器自动进行.
+	\item 引用就是常量指针
+	\item 引用必须初始化, 且不能改变指向
+	\item 无法对引用进行取地址, 或者说只能取到引用指向的对象的地址
+	\item 引用的解引用操作由编译器自动进行
 \end{enumerate}
 \subsubsection{\tt{void*}指针}
 指针一般有三个含义
 \begin{enumerate}
-	\item 指明数据的位置, 体现在指针的值.
-	\item 表示数据的大小, 例如int指针表示四个字节为一组的数据, 体现在指针的步长、自身的加减法计算.
-	\item 表示数据如何被解释, 例如float和int都是四字节, 但解释结果完全不同, 体现在指针解引用的结果.
+	\item 指明数据的位置, 体现在指针的值
+	\item 表示数据的大小, 例如{\tt int}指针表示四个字节为一组的数据, 体现在指针的步长、自身的加减法计算
+	\item 表示数据如何被解释, 例如{\tt float}和{\tt int}都是四字节, 但解释结果完全不同, 体现在指针解引用的结果
 \end{enumerate}
 
-void* 指针为第一种, 只指明了数据的位置. 以void*的视角来看内存空间也仅仅是内存空间, 没办法访问内存空间中所存的对象.
+{\tt void*} 指针为第一种, 只指明了数据的位置. 以{\tt void*}的视角来看内存空间也仅仅是内存空间, 没办法访问内存空间中所存的对象
 
-对于void*类型指针与其它类型指针的转换, C++有如下两个规定.
+对于{\tt void*}类型指针与其它类型指针的转换, {\tt C++}有如下两个规定
 \begin{enumerate}
-	\item 不允许从void*类型到其它类型的隐式转换, 允许从其它类型到void*类型的隐式转换, 常见于函数传参.
-	\item 字面量0可以隐式转换成任意类型的空指针常量.
+	\item 不允许从{\tt void*}类型到其它类型的隐式转换, 允许从其它类型到{\tt void*}类型的隐式转换, 常见于函数传参
+	\item 字面量0可以隐式转换成任意类型的空指针常量
 \end{enumerate}
 
-\subsubsection{\tt{nullptr}}
+\subsubsection{\tt{nullptr\quad <11>}}
 
-在C中, 常用NULL来表示空指针
+在{\tt C}中, 常用{\tt NULL}来表示空指针
 \begin{lstlisting}
 #define NULL ((void*)0)
 \end{lstlisting}
-然而在C++中不允许从void*隐式转换成其它类型的指针, 所以定义了一种新的指针类型, 指针空值类型{\large std::nullptr\_t}
-	, {\large nullptr}是它的一个实例, 当对指针进行初始化时:
+然而在{\tt C++}中不允许从{\tt void*}隐式转换成其它类型的指针, 所以定义了一种新的指针类型, 指针空值类型{\tt std::nullptr\_t}
+	, {\tt nullptr}是它的一个实例, 当对指针进行初始化时:
 \begin{lstlisting}
 int *p = nullptr;
 int *p = 0;
 \end{lstlisting}
-两者之间没有区别.
+两者之间没有区别
 
 \noindent 但在重载情况下:
 \begin{lstlisting}
 void func(int n);
 void func(int *p);
 \end{lstlisting}
-nullptr会匹配第二个, 而0实际上两个都能匹配, 在本实验环境中, 会匹配第一项且没有二义性问题.
+{\tt nullptr}会匹配第二个, 而0实际上两个都能匹配, 在本实验环境中, 会匹配第一项且没有二义性问题
 
 \noindent 若再定义一个
 \begin{lstlisting}
 void func(char *p);
 \end{lstlisting}
-则nullptr会出现二义性错误
+则{\tt nullptr}会出现二义性错误
 
-至于空指针具体指向哪个地址由编译器管理, 可能是内存中的0号地址, 即指针数据全是0, 也有可能不是.
+至于空指针具体指向哪个地址由编译器管理, 可能是内存中的0号地址, 即指针数据全是0, 也有可能不是
 
 %Effective Modern C++ 第8款, 使用nullptr 而非0, NULL.\\
 
@@ -290,112 +220,704 @@ void func(char *p);
 
 有三种情况会造成野指针:
 \begin{enumerate}
-	\item 指针未初始化.
-	\item 指针指向的对象生命周期结束, 如将一个函数体内的局部变量地址传递给外部指针.
-	\item 指针释放.
+	\item 指针未初始化
+	\item 指针指向的对象生命周期结束, 如将一个函数体内的局部变量地址传递给外部指针
+	\item 指针释放
 \end{enumerate}
 
-当指针被delete之后, 指针值变为无效, 继续对该指针进行操作会出现{\tt heap use after free}错误.
+当指针被{\tt delete}之后, 指针值变为无效, 继续对该指针进行操作会出现{\tt heap use after free}错误.
 
-事实上,当一个指针被delete之后, 指针指向的堆地址空间被释放, 随时可以被分配给其它对象, 但在不同的机器上会有不同的结果.
+事实上, 当一个指针被{\tt delete}之后, 指针指向的堆地址空间被释放, 随时可以被分配给其它对象, 但在不同的机器上会有不同的结果.
 
-\noindent 几种特殊情况, 指delete之后继续使用指针不报错的情况:
+\noindent 几种特殊情况, 指{\tt delete}之后继续使用指针不报错的情况:
 \begin{enumerate}
-	\item 指针的数据, 即它指向的地址发生改变, 对它进行解引用会得到0.
-	\item 地址不改变, 解引用会得到0.
-	\item 地址不改变, 该内存地址的值也未被擦除, 解引用得到跟delete之前一样的结果.
+	\item 指针的数据, 即它指向的地址发生改变, 对它进行解引用会得到0
+	\item 地址不改变, 解引用会得到0
+	\item 地址不改变, 该内存地址的值也未被擦除, 解引用得到跟{\tt delete}之前一样的结果
 \end{enumerate}
 
-准确来讲, delete的实际意义是将指针指向的内存空间释放, 以便能分配给其它对象, 但指针本身是否依旧指向那块内存, 
-	那块内存的数据是否被擦除, 将由编译器或者操作系统决定.TODO:具体决定方式存疑.
+准确来讲, {\tt delete}的实际意义是将指针指向的内存空间释放, 以便能分配给其它对象, 但指针本身是否依旧指向那块内存, 
+	那块内存的数据是否被擦除未定义
 
-给野指针赋nullptr初值避免麻烦.
+给野指针赋{\tt nullptr}初值避免麻烦
+
 \subsubsection{指向引用的指针, 指向指针的引用}
 对引用地址的获取行为会得到引用指向的对象的地址
-\begin{center}
 
+测试程序见\href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/basic/pointer_1}{$\mathbb{CPP\_BASIC\_POINTER\_1}$}
 
-	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\input{tex_include/pic_tex_include/cpp_basic_pointer_0.tex}
 
-	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-	%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-	
-	%Rounded Rect [id:dp11927883071932444] 
-	\draw   (85,185.8) .. controls (85,181.49) and (88.49,178) .. (92.8,178) -- (188.2,178) .. controls (192.51,178) and (196,181.49) .. (196,185.8) -- (196,209.2) .. controls (196,213.51) and (192.51,217) .. (188.2,217) -- (92.8,217) .. controls (88.49,217) and (85,213.51) .. (85,209.2) -- cycle ;
-	%Rounded Rect [id:dp6640212087116251] 
-	\draw   (85,124.8) .. controls (85,120.49) and (88.49,117) .. (92.8,117) -- (188.2,117) .. controls (192.51,117) and (196,120.49) .. (196,124.8) -- (196,148.2) .. controls (196,152.51) and (192.51,156) .. (188.2,156) -- (92.8,156) .. controls (88.49,156) and (85,152.51) .. (85,148.2) -- cycle ;
-	%Rounded Rect [id:dp3237041947663375] 
-	\draw   (85,60.8) .. controls (85,56.49) and (88.49,53) .. (92.8,53) -- (188.2,53) .. controls (192.51,53) and (196,56.49) .. (196,60.8) -- (196,84.2) .. controls (196,88.51) and (192.51,92) .. (188.2,92) -- (92.8,92) .. controls (88.49,92) and (85,88.51) .. (85,84.2) -- cycle ;
-	%Rounded Rect [id:dp9477857736296029] 
-	\draw   (367,189.8) .. controls (367,185.49) and (370.49,182) .. (374.8,182) -- (470.2,182) .. controls (474.51,182) and (478,185.49) .. (478,189.8) -- (478,213.2) .. controls (478,217.51) and (474.51,221) .. (470.2,221) -- (374.8,221) .. controls (370.49,221) and (367,217.51) .. (367,213.2) -- cycle ;
-	%Rounded Rect [id:dp4721875816932608] 
-	\draw   (366,127.8) .. controls (366,123.49) and (369.49,120) .. (373.8,120) -- (469.2,120) .. controls (473.51,120) and (477,123.49) .. (477,127.8) -- (477,151.2) .. controls (477,155.51) and (473.51,159) .. (469.2,159) -- (373.8,159) .. controls (369.49,159) and (366,155.51) .. (366,151.2) -- cycle ;
-	%Rounded Rect [id:dp34593900558257906] 
-	\draw   (364,62.8) .. controls (364,58.49) and (367.49,55) .. (371.8,55) -- (467.2,55) .. controls (471.51,55) and (475,58.49) .. (475,62.8) -- (475,86.2) .. controls (475,90.51) and (471.51,94) .. (467.2,94) -- (371.8,94) .. controls (367.49,94) and (364,90.51) .. (364,86.2) -- cycle ;
-	%Straight Lines [id:da5154723980908134] 
-	\draw    (51,146) -- (51.95,188) ;
-	\draw [shift={(52,190)}, rotate = 268.7] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-4.9) .. controls (6.95,-2.3) and (3.31,-0.67) .. (0,0) .. controls (3.31,0.67) and (6.95,2.3) .. (10.93,4.9)   ;
-	%Straight Lines [id:da5246033953497637] 
-	\draw    (50,81) -- (50.94,126) ;
-	\draw [shift={(51,129)}, rotate = 268.81] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
-	%Straight Lines [id:da36423552536908654] 
-	\draw    (327,150) -- (327.94,194) ;
-	\draw [shift={(328,197)}, rotate = 268.78] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
-	%Straight Lines [id:da2981001586744325] 
-	\draw    (326,83) -- (326.96,127) ;
-	\draw [shift={(327,129)}, rotate = 268.75] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-4.9) .. controls (6.95,-2.3) and (3.31,-0.67) .. (0,0) .. controls (3.31,0.67) and (6.95,2.3) .. (10.93,4.9)   ;
-	
-	% Text Node
-	\draw (74,239) node [anchor=north west][inner sep=0.75pt]   [align=left] {reference to pointer};
-	% Text Node
-	\draw (360,242) node [anchor=north west][inner sep=0.75pt]   [align=left] {pointer to reference};
-	% Text Node
-	\draw (113,190) node [anchor=north west][inner sep=0.75pt]   [align=left] {data \ 7};
-	% Text Node
-	\draw (22,190) node [anchor=north west][inner sep=0.75pt]   [align=left] {variable};
-	% Text Node
-	\draw (207,190) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress v};
-	% Text Node
-	\draw (28,127) node [anchor=north west][inner sep=0.75pt]   [align=left] {pointer};
-	% Text Node
-	\draw (206,128) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress p};
-	% Text Node
-	\draw (14,62) node [anchor=north west][inner sep=0.75pt]   [align=left] {reference};
-	% Text Node
-	\draw (206,62) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress p(r)};
-	% Text Node
-	\draw (111,62) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress p};
-	% Text Node
-	\draw (110,128) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress v};
-	% Text Node
-	\draw (290,131) node [anchor=north west][inner sep=0.75pt]   [align=left] {reference};
-	% Text Node
-	\draw (306,63) node [anchor=north west][inner sep=0.75pt]   [align=left] {pointer};
-	% Text Node
-	\draw (302,194) node [anchor=north west][inner sep=0.75pt]   [align=left] {variable};
-	% Text Node
-	\draw (488,196) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress v};
-	% Text Node
-	\draw (400,195) node [anchor=north west][inner sep=0.75pt]   [align=left] {data \ 7};
-	% Text Node
-	\draw (487,64) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress p};
-	% Text Node
-	\draw (489,131) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress v(r)};
-	% Text Node
-	\draw (391,131) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress v};
-	% Text Node
-	\draw (389,65) node [anchor=north west][inner sep=0.75pt]   [align=left] {adress v};
-	
-	
-	\end{tikzpicture}
-\end{center}
-测试程序见\href{https://github.com/wenqingqian/Obtuse/test/cpp_basic_pointer_1.cpp}{$\mathbb{CPP\_BASIC\_POINTER\_1}$}
+\subsection{\color{purple}{{\tt const}关键字}}
+\subsection{\color{purple}{{\tt malloc}和{\tt new}区别}}
 
-\subsection[{\tt malloc}和{\tt new}区别]{\color{purple}{{\tt malloc}和{\tt new}区别}}
-\section[面向对象]{\color{blue}{面向对象}}
+\section{\color{blue}{面向对象}}
 \subsection[多态的实现原理和应用场景]{\color{purple}{多态的实现原理和应用场景}}
-\section[\tt STL]{\color{blue}{\tt STL}}
-\subsection[线程安全的实现及标准容器库的线程安全性]{\color{purple}{线程安全的实现及标准容器库的线程安全性}}
-\subsection[{\tt sort}算法是怎么实现的]{\color{purple}{{\tt sort}算法是怎么实现的}}
 
-\section[\tt C++11]{\color{blue}{\tt C++11}}
+\section{\color{blue}{\tt STL}}
+\subsection{\color{purple}{线程安全的实现及标准容器库的线程安全性}}
+\subsection{\color{purple}{{\tt sort}算法是怎么实现的}}
+
+
+
+\section{\color{blue}{\tt C++11}}
+\subsection{ISOK:\color{purple}{\tt{decltype}和\tt{auto}}}
+
+\columnratio{0.5}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		\begin{lstlisting}[title=decltype,basicstyle=\small,columns=flexible,xleftmargin=2em,xrightmargin=2em]
+int *r=0;
+decltype (*r+0) a;//表达式结果为int, 因此a为int
+decltype (r) a;//a是指针
+decltype (*r) a = ini;//a是引用
+decltype ((r)) a = ini;//a是指向指针的引用
+decltype ((*r)) a = ini;//a是引用 
+		\end{lstlisting}
+		{\tt decltype((variable))}的结果永远是引用.
+	\end{leftcolumn}
+	\begin{rightcolumn}
+		\uline{{\tt auto}一般会忽略顶层{\tt const}, 保留底层{\tt const}}, 引用本身就是一个顶层{\tt const}指针, 因此{\tt auto}类型推导不会直接得到引用类型
+		\begin{lstlisting}[basicstyle=\small,columns=flexible,xleftmargin=2em,xrightmargin=2em]
+const int i = 1; const int&r = i;
+auto a = i;//a是int
+auto a = &i;//a是const int*(底层const)
+auto a = r;//a是int
+auto &a = i;//a是左引用
+auto &&a;(万能引用)
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+
+
+\subsection{ISOK:\color{purple}{左右值}}
+\subsubsection{左值与右值}
+\href{https://zhuanlan.zhihu.com/p/343507680}{原文}
+
+左值是一个对象, 可以用\&取地址, 而右值更贴近“值”本身. 一般来说, 表达式结束后, 
+	值是否有\uline{显式}的存储位置是左右值的区分(右值可以隐式存在内存中)
+
+\columnratio{0.5}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		左值:
+		\begin{enumerate}
+			\item 字符串字面量
+			\item 内置的前{\tt ++}与前{\tt --}
+			\item 右值引用类型变量
+			\item 转型为左值引用的表达式
+			\item *解引用的表达式
+		\end{enumerate}
+	\end{leftcolumn}
+	\begin{rightcolumn}
+		右值:
+		\begin{enumerate}
+			\item 非字符串的字面量以及枚举项
+			\item 置的后{\tt++}与后{\tt- -}
+			\item 内置的算术, 逻辑, 比较表达式
+			\item 内置取地址表达式, {\tt this}指针
+			\item 未命名的{\tt lambda}表达式
+			\item 转型为非引用的表达式
+			\item 转型为右值引用的表达式
+		\end{enumerate}
+	\end{rightcolumn}
+\end{paracol}
+\subsubsection{左值引用与右值引用}
+
+左右值并不是{\tt C++11}才有的新概念, 而右值引用是{\tt C++11}为了处理
+	无需深拷贝的资源转移型需求而引入
+
+左右引用只能处理对应的左右值. 一个例外是{\tt const T\&}, 既可以引用左值, 也可以引用右值
+
+\noindent 即可以写出这样的代码
+\begin{lstlisting}[basicstyle=\small,columns=flexible,xleftmargin=16em,xrightmargin=16em]
+const int& clr = 1; const int& clr2 = clr;
+\end{lstlisting}
+
+\vspace*{2em}
+\columnratio{0.3}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		对于右值来说, 不能真正取地址, 而引用实质就是操作地址指针, 因此理论上无法进行左引用. 对于左值来说, 
+			可以显式转换成右值引用
+
+		如右值例7, 转换为右值引用的表达式本身是一个右值, 但是通过右值引用绑定到的对象自身是一个左值, 即左值例3
+	\end{leftcolumn}
+	\begin{rightcolumn}
+		\begin{lstlisting}[basicstyle=\small,columns=flexible,xleftmargin=5em,xrightmargin=5em]
+	//可以将左值转为右值, 再进行右引用
+	Test t(1);
+	// 使用std::move转为右值引用
+	Test&& t1 = std::move(t);
+	// 使用static_cast转为右值引用
+	Test&& t2 = static_cast<Test&&>(t);
+	// 使用C风格强转为右值引用
+	Test&& t3 = (Test&&)t;
+	// 使用std::forwad<T&&>为右值引用
+	Test&& t4 = std::forward<T&&>(t);
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+
+\subsection{\color{purple}{移动语义与完美转发}}
+\subsubsection{浅拷贝与深拷贝}
+\columnratio{0.5}
+\begin{paracol}{2}
+	
+	\begin{leftcolumn}
+	当通过一个对象初始化另一个对象时,
+
+	如 \uline{{\tt Test a(10);}}\uline{{\tt Test b(a);}}时:
+
+	假设{\tt Test}中有资源拖管
+		
+	只记录资源{\tt Data}的指针, 而非记录资源全部信息到类对象里面, 
+		构造时从堆上用{\tt new}申请内存供资源后面使用, 析构时从堆上释放内存, 回收掉资源, 
+		中间过程资源读写操作都通过指针{\tt p}来完成. {\tt C++}对象构造与析构函数的成对调用, 
+		也保证了安全性与不发生泄露({\tt RAII})
+	\end{leftcolumn}
+	\begin{rightcolumn}
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+class Test1 public:
+	Test1(int s):size(s) 
+		p = new char[size];
+	~Test1()
+		if(p)  delete []p; 
+			   p = nullptr;
+	int size;
+	char* p;
+\end{lstlisting}	
+	\end{rightcolumn}
+\end{paracol}
+
+以右侧结构为例: 
+
+\input{tex_include/pic_tex_include/cpp_c++11_lrvalue_0.tex}
+
+\begin{enumerate}
+	\item 浅拷贝: 没有真正new内存, 两者共用一块内存地址, 当最后都析构时, 这块内存会被析构两次, 发生crash
+	\item 深拷贝: 将指针指向的资源深入复制了一份
+	\item 移动语义: 当原对象不再使用, 使用移动语义, 转移资源, 减少拷贝
+\end{enumerate}
+参考代码见\href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++/copy_0}{$\mathbb{CPP\_C11\_COPY\_0}$}
+
+\subsubsection{移动语义}
+移动语义: 一个对象的资源在销毁前, 将其转移给其它对象再用起来, 这样能减少资源带来的构造开销, 程序获得更高的效能
+
+移动语义的使用场景就是需要深拷贝原对象的资源, 而原对象不再使用, 就可以使用移动语义, 本质就是在浅拷贝的基础上
+	将原对象具有资源的指针置空.
+
+在{\tt C++11}之前, 移动语义使用的问题:
+\begin{enumerate}
+	\item 使用移动语义需要在构造函数中加额外的参数来选择是否使用移动语义
+	\item 因为需要修改类内数据, 无法使用拷贝构造函数({\tt const T\&})
+	\item 非{\tt const}引用又无法引用右值, 并且也需要{\tt const}引用来处理{\tt const}对象
+\end{enumerate}
+
+C++11直接统一, 增加\&\&右值引用, 事情变简单, 想要深拷贝的就T(const T\&)实现;
+	想要移动拷贝的就实现T(T\&\&). 两者都实现时, 一旦传入是个右值, 优先触发移动拷贝构造调用, 
+	使用移动语意, 转移资源, 减少拷贝
+
+\subsubsection{万能引用与引用折叠}
+在auto那一章提到过万能引用, 是以auto\&\&的形式.
+
+对于一个模板
+\begin{lstlisting}[xleftmargin=10em,xrightmargin=10em]
+	template<typename T> T func(T para){}
+\end{lstlisting}
+
+\columnratio{0.3}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		因为引用与引用的对象是没有区别的, 当传入一个引用时, 无法像指针那样分辨出来.
+	\end{leftcolumn}
+	\begin{rightcolumn}
+		\begin{lstlisting}
+	int i = 1; func(i); -- int func<int >(int para){} 
+	int&r = i; func(r); -- int func<int >(int para){}
+	int*p =&i; func(p); -- int*func<int*>(int*para){} 
+		\end{lstlisting}
+	\end{rightcolumn}
+	\begin{leftcolumn*}
+		所以当需要引用一个新的对象, 或是引用一个引用需要标注参数是一个引用.
+	\end{leftcolumn*}
+	\begin{rightcolumn}
+		\begin{lstlisting}
+	template<typename T> T& func(T& para){}
+	int i = 1; func(i); -- int& func<int>(int& para){}
+	int&r = i; func(r); -- int& func<int>(int& para){}
+		//T的值仍是int
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+
+在引入右值引用\&\&后情况出现了区别, 此时对于一个新的模板
+\begin{lstlisting}[xleftmargin=10em,xrightmargin=10em]
+	template<typename T> T&& func(T&& para){}
+\end{lstlisting}
+
+它表明参数是一个引用, 但未必是右引用, 因为C++的引用折叠机制
+\begin{itemize}
+	\item T\&  \& 折叠为T\&
+	\item T\&\& \& 折叠为T\&
+	\item T\&  \&\&折叠为T\&
+	\item T\&\& \&\&折叠为T\&\&
+\end{itemize}
+
+因此对于传入值为左值或右值会进行如下推导
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	int i = 1; func(i); -- int& func<int&>(int& para){}
+			   func(1); -- int&&func<int >(int&&para){}
+\end{lstlisting}
+
+当传入为左值T=int\&, 根据引用折叠机制int\& \&\&=int\&; 当传入为右值,T=int.(万能引用处理右值时, T为int而不是T\&\&)
+
+万能引用可以接受左值和右值, 但具有如下规则:
+\begin{enumerate}
+	\item 万能引用的T不能被再修饰, 不能被cv修饰限定, 否则转为普通右值引用
+	\item 在模板类中的模板函数使用万能引用, 只能接受模板函数的模板参数 
+			不接受模板类的模板参数, 否则转为普通右值引用
+\end{enumerate}
+
+\subsubsection{\tt{move}与\tt{forward}}
+
+引用移除:
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+template <class _Tp> struct remove_reference        {typedef _Tp type;};
+template <class _Tp> struct remove_reference<_Tp& > {typedef _Tp type;};
+template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
+\end{lstlisting}
+将类型转化为remove\_reference::type时, 根据原类型自动选择合适的版本并得到去掉引用后的类型. 一般是在模板
+	中传递模板参数时可以将模板参数转化成无引用类型.
+
+move:
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	template <class _Tp>
+	typename remove_reference<_Tp>::type&&
+	move(_Tp&& __t) noexcept{
+		return static_cast<typename remove_reference<_Tp>::type&&>(__t);
+	}
+\end{lstlisting}
+由于移动语义只接受右值, 对于一般对象需要将其转化为右值.
+
+\begin{lstlisting}[title=move,xleftmargin=2em,xrightmargin=2em]
+	//传入为左值:
+	int i = 1; int&& r = move(i);
+	//函数原型
+	typename remove_reference<int&>::type&&
+	move(int& t) noexcept{
+		return static_cast<typename remove_reference<int&>::type&&>(t);
+	}
+	
+	//相当于
+	int&& move(int& t) noexcept{return static_cast<int&&>(t);}
+
+	//1.万能引用模板推导T=int&, 原&&被引用折叠
+	//2.引用移除接收到模板参数T=int&, 并返回去除引用后的结果即int
+	//--步骤2的必要性在于将原模板参数引用去除后在添加&&才能得到右值引用类型, 原类型带有左引用时会导致添加的右引用被折叠
+	//3.返回值是右值的原因是将其强转为右值引用的这个表达式本身是一种值的表达, 一种临时变量, 而不是右值引用类型是右值, 如常见左值例3.
+	---
+	//传入为右值:
+	int&& r = move(1);
+	//函数原型
+	typename remove_reference<int >::type&&
+	move(int&& t) noexcept{
+		return static_cast<typename remove_reference<int >::type&&>(t);
+	}
+	//相当于
+	int&& move(int&&t) noexcept{return static_cast<int&&>(t);}
+
+\end{lstlisting}
+
+如上述所言, 当一个右值被右值引用后, 引用本身就成了左值, 这意味着无法将其按照右值进行继续传播.
+
+forward: 函数传进来是左引用, 函数体内也保持左引用, 传进来是右引用, 函数体内也保持右引用, 称为完美转发
+
+函数原型:
+\begin{lstlisting}[title=forward,xleftmargin=2em,xrightmargin=2em]
+	//处理左值作为左引用或者右引用
+	template <class _Tp>
+	_Tp&&
+	forward(typename remove_reference<_Tp>::type& __t) noexcept{
+		return static_cast<_Tp&&>(__t);
+	}
+	//处理右值作为右引用
+	template <class _Tp>
+	_Tp&&
+	forward(typename remove_reference<_Tp>::type&& __t) noexcept{
+		static_assert(!is_lvalue_reference<_Tp>::value,
+					"can not forward an rvalue as an lvalue");
+		return static_cast<_Tp&&>(__t);
+	}
+\end{lstlisting}
+
+左值和右值会自动匹配不同的版本,具体场景:
+\begin{lstlisting}
+auto&& n = func(1);
+
+1.				  |	2.						  | 3.
+template<class T> |	template<class T>		  |	template<class T>
+T&& func(T&& t){  |	T&& func(T&& t){		  |	T&& func(T&& t){
+	return t;	  |		return forward<T>(t); |		return static_cast<T&&>(t);
+}				  |	}						  |	}/*
+			
+1. T=int, 返回类型为int&&, 而t是左值.  
+2. T=int, return forward<int>(t) == return static_cast<int&&>(t)
+3. 由上可知, forward跟static_cast<T&&>的作用是一样的, 原类型是左引用返回左引用, 原类型右引用返回右引用*/
+\end{lstlisting}
+在万能模板情况下, t可能是左引用也可能是右引用, 但一定是左值, 无法再被右引用.
+
+\begin{enumerate}
+	\item t为右值, 则函数返回右值.
+	\item t为左值, 原类型为右值引用, 即实例模板参数T输入为非引用类型, 则返回右值, 其余返回左值
+\end{enumerate}
+
+\noindent 保持原来的左右引用关系并向下层次转化, 不再因右引用表达式是左值从而变掉.
+
+特殊情况: 传入的T是左引用, 传入的参数为右值, 即返回对右值的左引用.
+\vspace*{2em}
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	template<class T1, class T2>
+	T1&& StaticCastFun(T1&& a1, T2&& a2) {
+		return static_cast<T1&&>(a2);
+	}
+	template<class T1, class T2>
+	T1&& ForwardCastFun(T1&& a1, T2&& a2) {
+		return forward<T1>(a2);
+	}
+
+	struct TypeB{};
+	struct TypeA{
+		TypeA() { cout << "Default Create" << endl; }
+		TypeA(const TypeA&) { cout << "From TypeA Create" << endl; }
+		~TypeA() { cout << "Del" << endl; }
+		TypeA(const TypeB&) { cout << "From TypeB Create" << endl; }
+	};
+	---
+	int main(){
+		TypeA ta1;
+		TypeB tb1;
+		[&](const TypeA a, const TypeB b){
+			StaticCastFun(a, b);
+			ForwardCastFun(a, b);
+		}(ta1,tb1);
+		return 0;
+	}
+\end{lstlisting}
+当传入参数与模板实例T不是同一类别时, 且存在两个类别的转换, 则会在forward<T1>(a2)时将TypeB a2通过构造函数
+	生成一个临时的TypeA变量并传入forward中, 这个临时变量为右值, 因此会触发forward版本2, 而T1为const TypeA\&, 
+	会返回对右值的左引用, 因此forward分开两个版本并在右值处理中判断T是否为左引用. 除此之外与static\_cast<T\&\&>无差别.
+
+\subsection{\tt{using}}
+
+\subsubsection{作用域导入}
+“把目标的访问权限复制到using所在的当前作用域”, 
+	使得目标 “视为等同于在当前作用域定义”
+
+使用 using 导入命名空间, 即使一个命名空间中的所有名字都在该作用域中可见
+\begin{lstlisting}[xleftmargin=5em,xrightmargin=5em]
+	using namespace std; // 导入整个命名空间到当前作用域
+	using std::cout; // 只导入某个变量到当前作用域 
+\end{lstlisting}
+
+在派生类中引用基类成员
+\begin{lstlisting}
+class A{
+public:
+	void func(){cout<<val<<pval<<endl;}
+protected:
+	int val;
+private:
+	int pval;
+};
+
+class B:private A{//尽管派生类B对基类A是私有继承, 但通过using声明,
+public:			  //派生类的对象就可以访问基类的proteced成员变量和public成员函数
+	using A::func;//using的声明在public中, 视为在B的public中声明基类成员
+	using A::val ;//简单来说, 就是将原本继承后的private权限改为public
+//public or private: //error	
+//	using A::pval;//无法对基类private成员进行using
+};
+\end{lstlisting}
+
+\subsubsection{别名声明}
+通过using指定别名, 作用等同typedef
+
+\subsubsection{别名模板}
+using能够使用模板, 而typedef需要通过结构体包装
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	template<typename T> using  vec = vector<T>;
+	template<typename T> struct vec {
+		typedef vector<T> type;
+		//=using vec = vector<T>;
+	};
+	vec<int>       v_using
+	vec<int>::type v_typedef
+\end{lstlisting}
+
+\subsubsection{\tt{typename}}
+使用typedef加结构体包装的形式实现别名模板存在一个问题, 在使用此别名模板时若没有指定模板参数而是
+	传入另一个模板参数, 编译器会无法确认结构体中的这个type是不是类型.
+
+template内出现的名称如果相依于某个template参数, 称之为从属名称. 如果从属名称在class内成嵌套状, 
+	称为嵌套从属名称, 即无法确认为类型还是变量的名称
+
+C++规定在嵌套从属名称前加typename关键字以确定该名称是一个类型.
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+  template<typename T, class U> 
+  void func (T i){
+		       _typedef<int>::type a0 = i;  //非从属名称
+			   _using  <T  >       a1 = i;  //从属名称
+		       _typedef<T  >       a2    ;  //从属名称
+	  typename _typedef<T  >::type a3 = i;  //嵌套从属名称
+      typename U            ::type a4 = i;  //嵌套从属名称
+  }
+  //using   可以接受模板   模板绑定在别名上
+  //typedef 不可以接受模板 模板绑定在结构体上
+  //		在结构体内再声明与模板参数相同的类型成员, 形成了嵌套
+  //	    结构体_typedef可能在某个特化的情况下存在成员type不为类型的情况
+\end{lstlisting}
+
+特例: 请使用关键字typename标识嵌套从属名称, 但不能在基类列(base class lists)和
+	成员初值列(member initialization list)中用typename修饰基类(base class), 
+	这是确定的一个类型.
+
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	template<typename T>
+	class C{
+	public:
+		C(){}
+		C(T x):val(x){}
+		T val;
+	};
+	template<typename T>
+	struct Base{
+		typedef C<T> type;
+	};
+
+	template<typename T>
+	class D:public Base<T>::type{
+	public:
+		D(int x):Base<T>::type(x){
+			typename Base<T>::type tmpC;
+		}
+	};
+\end{lstlisting}
+
+\subsection[\tt{range for}\quad\quad $\mathbb{BASIC}$]{\color{purple}{范围循环}}
+在C++11中, 凡是支持begin,end方法的对象都可以使用范围循环, 本质上是等于迭代器遍历, 只不过细节被隐藏使得看上去更简洁.
+TODO:迭代器理解偏差
+
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	vector<int>v;  | = for(auto it = begin(v); it != end(v); ++it)
+	for(auto n:v); |		auto n = *it;
+\end{lstlisting}
+
+\subsubsection{\tt{begin}和\tt{end}}
+begin和end方法对内置数组类型进行了重载, 对其它对象则由对象自身实现相关的迭代器方案, 常见的标准库容器string, vector都
+	支持.begin().end()方法.
+
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	template <class Tp, size_t Np>
+	Tp* begin(Tp (&array)[Np]){
+		return array;
+	}
+	template <class Tp, size_t Np>
+	Tp* end(Tp (&array)[Np]){
+		return array + Np;
+	}
+
+	template <class Cp>
+	auto begin(Cp& c) -> decltype(c.begin()){
+		return c.begin();
+	}
+	template <class Cp>
+	auto begin(const Cp& c) -> decltype(c.begin()){
+		return c.begin();
+	}
+	template <class Cp>
+	auto end(Cp& c) -> decltype(c.end()){
+		return c.end();
+	}
+	template <class Cp>
+	auto end(const Cp& c) -> decltype(c.end()){
+		return c.end();
+	}
+\end{lstlisting}
+\subsubsection{数组指针}
+内置数组类型与指针很相似, 在很多情况下会退化成一个指针, 失去一部分信息, 无法再使用begin和end获得头尾指针
+
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	int a[]={1,2,3};
+	int* p = a;   //指针, 指向a[0].
+	int(*p)[3]=&a;//数组指针, 相当于一个二级指针, p指向a.
+	int(&r)[3]=a; //数组引用, 跟数组没有区别, 仍保留数组大小信息.
+
+	void f(int a[]);   //数组仍会退化成一个指针 = void f(int* a);
+	void f(int(&a)[N]);//不会退化
+	void f2(auto& a);  //相当于 int(&a)[N]
+	void f2(auto a);   //相当于 int* a
+
+	f(a); //会出现二义性错误, 数组a能同时匹配数组类型和指针类型
+	f(p); //只会匹配第一个
+\end{lstlisting}
+
+对于一个二维数组, 若想使用范围循环, 在外层循环需要使用引用才能使原本该得到的一维数组不退化成指针, 否则在内层循环中无法对指针进行遍历.
+
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	int a[3][3]={1,2,3,4,5,6,7,8,9};
+	//for(int(&c)[3]:a)
+	//外层循环得到三个一维数组的引用
+	for(auto&c:a){
+		for(int i:c){
+			cout<<i;
+		}
+	}
+	//for(int*c :a)
+	//外层循环得到三个一维数组退化后的指针
+	//即指向三个一维数组首元素地址的指针
+	for(auto c:a){
+		for(int i=0;i<3;++i){
+			cout<<c[i];
+		}
+	}
+	auto ftest3_p = [](int p[][3]){
+		//= [](int(*p)[3]) 两种写法相同
+		for(int i=0;i<3;++i){
+			for(int j=0;j<3;++j){
+				//(*(p+i))解引用得到一级指针,指向含有三个元素的数组头
+				cout<<(*(p+i))[j];
+			}
+		}
+	};
+	ftest3_p(a);
+\end{lstlisting}
+
+\subsection[\tt{cast}\quad\quad $\mathbb{BASIC}$]{\huge\color{purple}{强制类型转换}}
+C++引入新的强制类型转换机制, 主要是为了克服C语言强制类型转换没有从形式上体现转换功能和风险不同的问题.
+
+C语言的类型转换, 编译器会在下面这些C++的转换方法去逐一评估, 直到挑选到合适的. 
+
+如果想清晰确认每一步转换是怎么进行的, 使用C++式转换, 对于简单的, 嫌麻烦可由编译器代劳使用C式转换.
+
+通过对不同形式的转换进行分类命名可以更清晰分辨程序在转换过程中的具体形式, 使得出现问题时更容易找到可能与之相关的那一类
+	转换方法. 
+\subsubsection{\tt{static\_cast}}
+\columnratio{0.4}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		低风险转换方式, 不能处理具有底层const属性的类型.
+
+		常用于基本内置类型的转换, void*指针与其它类型指针的转换, 基类与派生类指针的转换.
+	\end{leftcolumn}	
+	\begin{rightcolumn}
+		\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+void fstatic(){
+	double a = 2.2;
+	int    b = static_cast<int>(a);
+
+	void* p  = &b;
+	int*  ip = static_cast<int*>(p);
+}
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+\subsubsection{\tt{const\_cast}}
+\columnratio{0.4}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		只能用于删除运算对象的底层const, 也只有这个函数可以修改对象的底层const属性.
+
+		即将一个指向常量的指针转换成普通指针, 获得修改指向对象的权限, 此方法只适用于指向对象是非const对象, 
+			若指向对象是const则行为未定义.
+	\end{leftcolumn}	
+	\begin{rightcolumn}
+		\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+void fconst(){
+		  int  n  = 1;
+	const int* cp = &n;
+	//(*cp)++; error
+	      int* p  = const_cast
+		  			<int*>(cp);
+	(*p)++;
+
+	//未定义行为, 本环境未改变cn
+	const int  cn  = 1;
+	const int* cp2 = &cn;
+		  int* p2  = const_cast
+		  			 <int*>(cp2);
+	(*p2)++;
+}
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+\subsubsection{\tt{reinterpret\_cast}}
+\columnratio{0.4}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		为运算对象的位模式提供底层重新解释, 用于进行各种不同类型的指针之间、不同类型的引用之间的转换, 
+			执行的过程是逐个比特复制的操作.
+
+		自由程度高, 可以将int*指针转成string*, 至于之后引发的错误需由自己承担.
+
+		对于基类指针与派生类指针的转换不会进行地址的偏移.
+	\end{leftcolumn}	
+	\begin{rightcolumn}
+		\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+void freinterpret(){
+	int     a  = 1;
+	int*    p  = &a;
+	float*  dp = reinterpret_cast
+				 <float*>(p);
+	//(*dp)=1.4013e-45
+	//float和int都是32位但是编码格式不同
+	//比特层面上相同, 不同的解释方式
+	//得到不同的结果
+}
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+\subsubsection{\tt{dynamic\_cast}}
+TODO:dc
+
+\subsubsection{example}
+
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+	class A{
+	public:
+		float a;
+	};
+	class B{
+	public:
+		int b;
+	};
+	class C:public A,public B{
+	public:
+		int c;
+	};
+	void fdiff(){
+		C* pc  = new C;
+		pc->a  = 1;
+		pc->b  = 2;
+		pc->c  = 3;
+		B* pb  = (B*)pc;
+		B* pbs = static_cast<B*>(pc);
+		B* pbr = reinterpret_cast<B*>(pc);
+		B* pbd = dynamic_cast<B*>(pc);
+		cout<<"pc:" <<pc <<endl;
+		cout<<"pb:" <<pb <<'-'<<pb->b <<endl;
+		cout<<"pbs:"<<pbs<<'-'<<pbs->b<<endl;
+		cout<<"pbr:"<<pbr<<'-'<<pbr->b<<endl;
+		cout<<"pbd:"<<pbd<<'-'<<pbd->b<<endl;
+		//pc:0x12be068f0
+		//pb:0x12be068f8-2
+		//pbs:0x12be068f8-2
+		//pbr:0x12be068f0-1065353216
+		//pbd:0x12be068f8-2
+	}
+\end{lstlisting}
+
+reinterpret\_cast转换后的B类指针指向原先C类指针pc指向的类内首地址也是类A的首地址.
+
+对得到的这个pbr指针按B类的方式获取类内对象b, 按照类内分布进行地址偏移得到b, 然而此时pbr实际指向地址还是C的地址
+	, 即A的首地址, 三个类内分布又相同, 偏移后得到的是类A中的a, 并且按照b的属性int去解释, 得到例子中的结果.
