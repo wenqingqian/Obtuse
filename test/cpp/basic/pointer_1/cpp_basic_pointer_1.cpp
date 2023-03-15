@@ -14,7 +14,7 @@ public:
 };
 int main() {
 	{
-	test1 *p        = new test1;
+	test1 *p       = new test1;
 	long long *ptr = (long long*) p;
 
 	cout<< (long long)&p->v <<endl; //5022705584
@@ -24,7 +24,7 @@ int main() {
 	cout<< *(ptr+1)			<<endl; // 5022705584
 	cout<< *(ptr+2)			<<endl; // 5022705592
 	}{
-	test2 *p        = new test2;
+	test2 *p       = new test2;
 	long long *ptr = (long long*) p;
 	
 	cout<< (long long)&p->v <<endl; // 5669676896
