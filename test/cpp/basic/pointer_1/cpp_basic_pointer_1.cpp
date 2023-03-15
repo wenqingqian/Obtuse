@@ -1,4 +1,5 @@
-#include"head/all.h"
+#include<iostream>
+using namespace std;
 class test1{
 public:
 	int v   = 4;

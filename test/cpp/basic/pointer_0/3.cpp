@@ -1,4 +1,5 @@
-#include"../head/all.h"
+#include<iostream>
+using namespace std;
 
 void getMemory(char **p, int n) {
     *p = new char[n];

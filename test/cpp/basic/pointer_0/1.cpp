@@ -1,4 +1,5 @@
-#include"../head/all.h"
+#include<iostream>
+using namespace std;
 
 void getMemory(int *p) {
 	cout<<p<<"old p"<<endl;
