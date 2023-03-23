@@ -3,11 +3,12 @@
 \setcounter{page}{1}
 \chapter{\tt C++}
 \thispagestyle{fancy}
-%--------------------Setting------------------------------------%
-
+%------------------------------------------------------------------------------------------------%
+%-------------------------------------Section basic------------------------------------%
+%------------------------------------------------------------------------------------------------%
 \section{\color{blue}{基础}}
 
-\subsection{ISOK:\color{purple}{{\tt C}和{\tt C++}区别}}
+\subsection{<===>\color{purple}{{\tt C}和{\tt C++}区别}}
 
 \begin{enumerate}
 	\item {\tt C}语言是{\tt C++}的子集, {\tt C++}可以很好兼容{\tt C}语言. 但是{\tt C++}又有很多新特性, 
@@ -19,7 +20,7 @@
 	\item {\tt C++}可复用性高, {\tt C++}引入了模板的概念, 后面在此基础上, 实现了方便开发的标准模板库{\tt STL}. 
 			{\tt C++}的{\tt STL}库相对于{\tt C}语言的函数库更灵活、更通用
 \end{enumerate}
-\subsection{ISOK:\color{purple}{{\tt C++}从代码到可执行二进制文件的过程}}
+\subsection{<===>\color{purple}{{\tt C++}从代码到可执行二进制文件的过程}}
 \begin{enumerate}
 	\item 预编译: 这个过程主要的处理操作如下
 	\begin{enumerate}
@@ -50,7 +51,7 @@
 				生成的动态链接库, {\tt Windows}下以{\tt .dll}为后缀, {\tt Linux}下以{\tt .so}为后缀
 	\end{itemize}
 \end{enumerate}
-\subsection{ISOK:\color{purple}{{\tt static}关键字}}
+\subsection{<===>\color{purple}{{\tt static}关键字}}
 \begin{enumerate}
 	\item 全局静态变量和局部静态变量: 初始化的静态变量会在数据段分配内存, 未初始化的静态变量会在{\tt BSS}段分配内存. 
 			直到程序结束, 静态变量始终会维持前值. 只不过全局静态变量和局部静态变量的作用域不一样
@@ -64,8 +65,7 @@
 			而静态成员函数不属于任何一个对象, 因此{\tt C++}规定\uline{静态成员函数没有{\tt this}指针}. 
 			既然它没有指向某一对象, 也就无法对一个对象中的非静态成员进行访问
 \end{enumerate}
-
-\subsection{ISOK:\color{purple}{{\tt extern}关键字与链接性}}
+\subsection{<===>\color{purple}{{\tt extern}关键字与链接性}}
 
 在{\tt C++}中, 翻译单元由实现文件及直接或间接包含的所有标头组成
 
@@ -73,8 +73,9 @@
 
 \noindent 每个翻译单元由编译器单独编译, 最终将得到的.o文件链接得到可执行文件. 如上图所示程序结构, 在链接时会出现如下问题:
 
-假如在{\tt head.h}文件中定义一个外部链接性变量.
-\begin{lstlisting}
+假如在{\tt head.h}文件中定义一个外部链接性变量
+
+\begin{lstlisting}[xleftmargin=2em]
 #ifndef HEAD_H
 #define HEAD_H
 int i = 0;
@@ -158,8 +159,7 @@ linkage.
 
 If, within a translation unit, the same identifier appears with both internal 
 and external linkage, the behavior is undefined.}
-
-\subsection{ISOK:\color{purple}{指针与引用}}
+\subsection{<===>\color{purple}{指针与引用}}
 \subsubsection{指针与引用的区别}
 \begin{enumerate}
 	\item 引用就是常量指针
@@ -186,26 +186,26 @@ and external linkage, the behavior is undefined.}
 \subsubsection{\tt{nullptr\quad <11>}}
 
 在{\tt C}中, 常用{\tt NULL}来表示空指针
-\begin{lstlisting}
+\begin{lstlisting}[xleftmargin=2em]
 #define NULL ((void*)0)
 \end{lstlisting}
 然而在{\tt C++}中不允许从{\tt void*}隐式转换成其它类型的指针, 所以定义了一种新的指针类型, 指针空值类型{\tt std::nullptr\_t}
 	, {\tt nullptr}是它的一个实例, 当对指针进行初始化时:
-\begin{lstlisting}
+\begin{lstlisting}[xleftmargin=2em]
 int *p = nullptr;
 int *p = 0;
 \end{lstlisting}
 两者之间没有区别
 
 \noindent 但在重载情况下:
-\begin{lstlisting}
+\begin{lstlisting}[xleftmargin=2em]
 void func(int n);
 void func(int *p);
 \end{lstlisting}
 {\tt nullptr}会匹配第二个, 而0实际上两个都能匹配, 在本实验环境中, 会匹配第一项且没有二义性问题
 
 \noindent 若再定义一个
-\begin{lstlisting}
+\begin{lstlisting}[xleftmargin=2em]
 void func(char *p);
 \end{lstlisting}
 则{\tt nullptr}会出现二义性错误
@@ -244,24 +244,30 @@ void func(char *p);
 \subsubsection{指向引用的指针, 指向指针的引用}
 对引用地址的获取行为会得到引用指向的对象的地址
 
-测试程序见\href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/basic/pointer_1}{$\mathbb{CPP\_BASIC\_POINTER\_1}$}
+测试程序见 \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/basic/pointer_1}{\tt cpp\_basic\_pointer\_1}
 
 \input{tex_include/pic_tex_include/cpp_basic_pointer_0.tex}
-
 \subsection{\color{purple}{{\tt const}关键字}}
 \subsection{\color{purple}{{\tt malloc}和{\tt new}区别}}
-
+%------------------------------------------------------------------------------------------------%
+%-------------------------------------Section object-oriented---------------------------%
+%------------------------------------------------------------------------------------------------%
 \section{\color{blue}{面向对象}}
-\subsection[多态的实现原理和应用场景]{\color{purple}{多态的实现原理和应用场景}}
 
+\subsection[多态的实现原理和应用场景]{\color{purple}{多态的实现原理和应用场景}}
+%------------------------------------------------------------------------------------------------%
+%-------------------------------------Section STL---------------------------------------%
+%------------------------------------------------------------------------------------------------%
 \section{\color{blue}{\tt STL}}
+
 \subsection{\color{purple}{线程安全的实现及标准容器库的线程安全性}}
 \subsection{\color{purple}{{\tt sort}算法是怎么实现的}}
 
-
-
+%------------------------------------------------------------------------------------------------%
+%-------------------------------------Section C++11------------------------------------%
 \section{\color{blue}{\tt C++11}}
-\subsection{ISOK:\color{purple}{\tt{decltype}和\tt{auto}}}
+
+\subsection{<===>\color{purple}{\tt{decltype}和\tt{auto}}}
 
 \columnratio{0.5}
 \begin{paracol}{2}
@@ -288,11 +294,9 @@ auto &&a;(万能引用)
 		\end{lstlisting}
 	\end{rightcolumn}
 \end{paracol}
-
-
-\subsection{ISOK:\color{purple}{左右值}}
+\subsection{<===>\color{purple}{左右值}}
 \subsubsection{左值与右值}
-\href{https://zhuanlan.zhihu.com/p/343507680}{原文}
+ \href{https://zhuanlan.zhihu.com/p/402251966}{原文}
 
 左值是一个对象, 可以用\&取地址, 而右值更贴近“值”本身. 一般来说, 表达式结束后, 
 	值是否有\uline{显式}的存储位置是左右值的区分(右值可以隐式存在内存中)
@@ -335,7 +339,7 @@ const int& clr = 1; const int& clr2 = clr;
 \end{lstlisting}
 
 \vspace*{2em}
-\columnratio{0.3}
+\columnratio{0.4}
 \begin{paracol}{2}
 	\begin{leftcolumn}
 		对于右值来说, 不能真正取地址, 而引用实质就是操作地址指针, 因此理论上无法进行左引用. 对于左值来说, 
@@ -345,21 +349,20 @@ const int& clr = 1; const int& clr2 = clr;
 	\end{leftcolumn}
 	\begin{rightcolumn}
 		\begin{lstlisting}[basicstyle=\small,columns=flexible,xleftmargin=5em,xrightmargin=5em]
-	//可以将左值转为右值, 再进行右引用
-	Test t(1);
-	// 使用std::move转为右值引用
-	Test&& t1 = std::move(t);
-	// 使用static_cast转为右值引用
-	Test&& t2 = static_cast<Test&&>(t);
-	// 使用C风格强转为右值引用
-	Test&& t3 = (Test&&)t;
-	// 使用std::forwad<T&&>为右值引用
-	Test&& t4 = std::forward<T&&>(t);
+//可以将左值转为右值, 再进行右引用
+Test t(1);
+// 使用std::move转为右值引用
+Test&& t1 = std::move(t);
+// 使用static_cast转为右值引用
+Test&& t2 = static_cast<Test&&>(t);
+// 使用C风格强转为右值引用
+Test&& t3 = (Test&&)t;
+// 使用std::forwad<T&&>为右值引用
+Test&& t4 = std::forward<T&&>(t);
 		\end{lstlisting}
 	\end{rightcolumn}
 \end{paracol}
-
-\subsection{\color{purple}{移动语义与完美转发}}
+\subsection{<===>\color{purple}{移动语义与完美转发}}
 \subsubsection{浅拷贝与深拷贝}
 \columnratio{0.5}
 \begin{paracol}{2}
@@ -399,8 +402,7 @@ class Test1 public:
 	\item 深拷贝: 将指针指向的资源深入复制了一份
 	\item 移动语义: 当原对象不再使用, 使用移动语义, 转移资源, 减少拷贝
 \end{enumerate}
-参考代码见\href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/copy_0}{$\mathbb{CPP\_C11\_COPY\_0}$}
-
+参考代码见 \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/copy_0}{\tt cpp\_c11\_copy\_0}
 \subsubsection{移动语义}
 移动语义: 一个对象的资源在销毁前, 将其转移给其它对象再用起来, 这样能减少资源带来的构造开销, 程序获得更高的效能
 
@@ -414,16 +416,16 @@ class Test1 public:
 	\item 非{\tt const}引用又无法引用右值, 并且也需要{\tt const}引用来处理{\tt const}对象
 \end{enumerate}
 
-C++11直接统一, 增加\&\&右值引用, 事情变简单, 想要深拷贝的就T(const T\&)实现;
-	想要移动拷贝的就实现T(T\&\&). 两者都实现时, 一旦传入是个右值, 优先触发移动拷贝构造调用, 
-	使用移动语意, 转移资源, 减少拷贝
+{\tt C++11}直接统一, 增加{\tt \&\&}右值引用, 事情变简单, 想要深拷贝的就{\tt T(const T\&)}实现;
+	想要移动拷贝的就实现{\tt T(T\&\&)}. 两者都实现时, 一旦传入是个右值, 根据重载机制会优先
+	触发移动拷贝构造调用, 使用移动语意, 转移资源, 减少拷贝
 
+{\tt ->}\quad 底层{\tt const}可用于重载而顶层不能, 对于非{\tt const}对象会优先匹配非{\tt const}引用
 \subsubsection{万能引用与引用折叠}
-在auto那一章提到过万能引用, 是以auto\&\&的形式.
 
 对于一个模板
 \begin{lstlisting}[xleftmargin=10em,xrightmargin=10em]
-	template<typename T> T func(T para){}
+template<typename T> T func(T para){}
 \end{lstlisting}
 
 \columnratio{0.3}
@@ -432,53 +434,53 @@ C++11直接统一, 增加\&\&右值引用, 事情变简单, 想要深拷贝的�
 		因为引用与引用的对象是没有区别的, 当传入一个引用时, 无法像指针那样分辨出来.
 	\end{leftcolumn}
 	\begin{rightcolumn}
-		\begin{lstlisting}
-	int i = 1; func(i); -- int func<int >(int para){} 
-	int&r = i; func(r); -- int func<int >(int para){}
-	int*p =&i; func(p); -- int*func<int*>(int*para){} 
+		\begin{lstlisting}[xleftmargin=2em]
+int i = 1; func(i); -- int func<int >(int para){} 
+int&r = i; func(r); -- int func<int >(int para){}
+int*p =&i; func(p); -- int*func<int*>(int*para){} 
 		\end{lstlisting}
 	\end{rightcolumn}
 	\begin{leftcolumn*}
 		所以当需要引用一个新的对象, 或是引用一个引用需要标注参数是一个引用.
 	\end{leftcolumn*}
 	\begin{rightcolumn}
-		\begin{lstlisting}
-	template<typename T> T& func(T& para){}
-	int i = 1; func(i); -- int& func<int>(int& para){}
-	int&r = i; func(r); -- int& func<int>(int& para){}
+		\begin{lstlisting}[xleftmargin=2em]
+template<typename T> T& func(T& para){}
+int i = 1; func(i); -- int& func<int>(int& para){}
+int&r = i; func(r); -- int& func<int>(int& para){}
 		//T的值仍是int
 		\end{lstlisting}
 	\end{rightcolumn}
 \end{paracol}
 
-在引入右值引用\&\&后情况出现了区别, 此时对于一个新的模板
+在引入右值引用{\tt \&\&}后情况出现了区别, 此时对于一个新的模板
 \begin{lstlisting}[xleftmargin=10em,xrightmargin=10em]
-	template<typename T> T&& func(T&& para){}
+template<typename T> T&& func(T&& para){}
 \end{lstlisting}
 
-它表明参数是一个引用, 但未必是右引用, 因为C++的引用折叠机制
+它表明参数是一个引用, 但未必是右引用, 因为{\tt C++}的引用折叠机制
 \begin{itemize}
-	\item T\&  \& 折叠为T\&
-	\item T\&\& \& 折叠为T\&
-	\item T\&  \&\&折叠为T\&
-	\item T\&\& \&\&折叠为T\&\&
+	\item {\tt T\&  \&} 折叠为{tt T\&}
+	\item {\tt T\&\& \&} 折叠为{\tt T\&}
+	\item {\tt T\&  \&\&} 折叠为{\tt T\&}
+	\item {\tt T\&\& \&\&} 折叠为{\tt T\&\&}
 \end{itemize}
 
 因此对于传入值为左值或右值会进行如下推导
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
-	int i = 1; func(i); -- int& func<int&>(int& para){}
-			   func(1); -- int&&func<int >(int&&para){}
+\begin{lstlisting}[xleftmargin=4em,xrightmargin=2em]
+int i = 1; func(i); -- int& func<int&>(int& para){}
+		   func(1); -- int&&func<int >(int&&para){}
 \end{lstlisting}
 
-当传入为左值T=int\&, 根据引用折叠机制int\& \&\&=int\&; 当传入为右值,T=int.(万能引用处理右值时, T为int而不是T\&\&)
+当传入为左值{\tt T=int\&}, 根据引用折叠机制{\tt int\& \&\&=int\&}; 当传入为右值{\tt T=int}
+.(万能引用处理右值时, {\tt T}为{\tt int}而不是{\tt T\&\&})
 
 万能引用可以接受左值和右值, 但具有如下规则:
 \begin{enumerate}
-	\item 万能引用的T不能被再修饰, 不能被cv修饰限定, 否则转为普通右值引用
+	\item 万能引用的{\tt T}不能被再修饰, 不能被{\tt cv}修饰限定, 否则转为普通右值引用
 	\item 在模板类中的模板函数使用万能引用, 只能接受模板函数的模板参数 
 			不接受模板类的模板参数, 否则转为普通右值引用
 \end{enumerate}
-
 \subsubsection{\tt{move}与\tt{forward}}
 
 引用移除:
@@ -487,20 +489,19 @@ template <class _Tp> struct remove_reference        {typedef _Tp type;};
 template <class _Tp> struct remove_reference<_Tp& > {typedef _Tp type;};
 template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
 \end{lstlisting}
-将类型转化为remove\_reference::type时, 根据原类型自动选择合适的版本并得到去掉引用后的类型. 一般是在模板
-	中传递模板参数时可以将模板参数转化成无引用类型.
+将类型转化为{\tt remove\_reference::type}时, 根据原类型自动选择合适的版本并得到去掉引用后的类型. 一般是在模板
+	中传递模板参数时可以将模板参数转化成无引用类型
 
-move:
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+
+由于移动语义只接受右值, 对于一般对象需要将其转化为右值.
+
+\begin{lstlisting}[title=move,xleftmargin=2em,xrightmargin=2em]
+	//原型
 	template <class _Tp>
 	typename remove_reference<_Tp>::type&&
 	move(_Tp&& __t) noexcept{
 		return static_cast<typename remove_reference<_Tp>::type&&>(__t);
 	}
-\end{lstlisting}
-由于移动语义只接受右值, 对于一般对象需要将其转化为右值.
-
-\begin{lstlisting}[title=move,xleftmargin=2em,xrightmargin=2em]
 	//传入为左值:
 	int i = 1; int&& r = move(i);
 	//函数原型
@@ -511,11 +512,11 @@ move:
 	
 	//相当于
 	int&& move(int& t) noexcept{return static_cast<int&&>(t);}
-
-	//1.万能引用模板推导T=int&, 原&&被引用折叠
-	//2.引用移除接收到模板参数T=int&, 并返回去除引用后的结果即int
-	//--步骤2的必要性在于将原模板参数引用去除后在添加&&才能得到右值引用类型, 原类型带有左引用时会导致添加的右引用被折叠
-	//3.返回值是右值的原因是将其强转为右值引用的这个表达式本身是一种值的表达, 一种临时变量, 而不是右值引用类型是右值, 如常见左值例3.
+	
+	1.万能引用模板推导T=int&, 原&&被引用折叠
+	2.引用移除接收到模板参数T=int&, 并返回去除引用后的结果即int
+	--步骤2的必要性在于将原模板参数引用去除后在添加&&才能得到右值引用类型, 原类型带有左引用时会导致添加的右引用被折叠
+	3.返回值是右值的原因是将其强转为右值引用的这个表达式本身是一种值的表达, 一种临时变量, 而不是右值引用类型是右值, 如常见左值例3.
 	---
 	//传入为右值:
 	int&& r = move(1);
@@ -531,10 +532,9 @@ move:
 
 如上述所言, 当一个右值被右值引用后, 引用本身就成了左值, 这意味着无法将其按照右值进行继续传播.
 
-forward: 函数传进来是左引用, 函数体内也保持左引用, 传进来是右引用, 函数体内也保持右引用, 称为完美转发
+{\tt forward:} 函数传进来是左引用, 函数体内也保持左引用, 传进来是右引用, 函数体内也保持右引用, 称为完美转发
 
-函数原型:
-\begin{lstlisting}[title=forward,xleftmargin=2em,xrightmargin=2em]
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em,title={\tt forward}]
 	//处理左值作为左引用或者右引用
 	template <class _Tp>
 	_Tp&&
@@ -549,49 +549,51 @@ forward: 函数传进来是左引用, 函数体内也保持左引用, 传进来�
 					"can not forward an rvalue as an lvalue");
 		return static_cast<_Tp&&>(__t);
 	}
+	//底层都是static_cast<T&&>(t)
+	//需要显示传递模板参数
+	//由该函数易知, 传入的模板参数类型决定了传出的类型
+
+	//函数参数使用remove的目的是
+	//不管传入的模板参数是什么, 保证左右值会进入对应的版本
+	//以检测不经意间指定了错误的模板参数, 如下面将要介绍的传递了左引用模板参数而函数参数是一个右值
 \end{lstlisting}
 
-左值和右值会自动匹配不同的版本,具体场景:
-\begin{lstlisting}
+\begin{lstlisting}[title=具体场景]
 auto&& n = func(1);
 
 1.				  |	2.						  | 3.
 template<class T> |	template<class T>		  |	template<class T>
 T&& func(T&& t){  |	T&& func(T&& t){		  |	T&& func(T&& t){
 	return t;	  |		return forward<T>(t); |		return static_cast<T&&>(t);
-}				  |	}						  |	}/*
+}//error		  |	}						  |	}/*
 			
-1. T=int, 返回类型为int&&, 而t是左值.  
-2. T=int, return forward<int>(t) == return static_cast<int&&>(t)
-3. 由上可知, forward跟static_cast<T&&>的作用是一样的, 原类型是左引用返回左引用, 原类型右引用返回右引用*/
+1.   T=int, 返回类型为int&&, 而t是左值.  
+2.3. T=int, return forward<int>(t) == return static_cast<int&&>(t)
+4.   由上可知, forward<T>跟static_cast<T&&>的作用是一样的
+	 原类型是左引用返回左引用, 原类型右引用返回右引用, 完美转发了对象
+	 保持原来的左右引用关系并向下层次转化, 不再因右引用表达式是左值从而变掉
+	 当传入左值时, T=int&, 2.3. ==
+	 	int& func(int& t){ return forward/static_cast<int&>(t); }
 \end{lstlisting}
-在万能模板情况下, t可能是左引用也可能是右引用, 但一定是左值, 无法再被右引用.
 
-\begin{enumerate}
-	\item t为右值, 则函数返回右值.
-	\item t为左值, 原类型为右值引用, 即实例模板参数T输入为非引用类型, 则返回右值, 其余返回左值
-\end{enumerate}
+大部分情况下, {\tt static\_cast<T\&\&>(t)}等同{\tt forward<T>(t)}
 
-\noindent 保持原来的左右引用关系并向下层次转化, 不再因右引用表达式是左值从而变掉.
-
-特殊情况: 传入的T是左引用, 传入的参数为右值, 即返回对右值的左引用.
-\vspace*{2em}
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
-	template<class T1, class T2>
-	T1&& StaticCastFun(T1&& a1, T2&& a2) {
-		return static_cast<T1&&>(a2);
-	}
-	template<class T1, class T2>
-	T1&& ForwardCastFun(T1&& a1, T2&& a2) {
-		return forward<T1>(a2);
-	}
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em,title=特殊情况]
+	template<class A, class B>
+	A&& StaticCastFun(A&& a, B&& b) {
+		return static_cast<A&&>(b);
+	}//warning
+	template<class A, class B>
+	A&& ForwardCastFun(A&& a, B&& b) {
+		return forward<A>(b);
+	}//error
 
 	struct TypeB{};
 	struct TypeA{
-		TypeA() { cout << "Default Create" << endl; }
-		TypeA(const TypeA&) { cout << "From TypeA Create" << endl; }
-		~TypeA() { cout << "Del" << endl; }
-		TypeA(const TypeB&) { cout << "From TypeB Create" << endl; }
+		TypeA() {}
+		TypeA(const TypeA&) {}
+		~TypeA() {}
+		TypeA(const TypeB&) {}
 	};
 	---
 	int main(){
@@ -603,66 +605,65 @@ T&& func(T&& t){  |	T&& func(T&& t){		  |	T&& func(T&& t){
 		}(ta1,tb1);
 		return 0;
 	}
+	当传入参数与模板参数不是同一类别时, 且存在TypeB到TypeA的转换
+	则会在forward<A>(b)时将TypeB b通过TypeA提供的构造函数生成一个临时的TypeA变量并传入forward中
+	这个临时变量为右值, 因此会触发forward右值版本, 而A为const TypeA&
+	会返回对右值的左引用, 因此forward分开两个版本并在右值处理中判断T是否为左引用. 除此之外与static_cast<T&&>无差别
+
 \end{lstlisting}
-当传入参数与模板实例T不是同一类别时, 且存在两个类别的转换, 则会在forward<T1>(a2)时将TypeB a2通过构造函数
-	生成一个临时的TypeA变量并传入forward中, 这个临时变量为右值, 因此会触发forward版本2, 而T1为const TypeA\&, 
-	会返回对右值的左引用, 因此forward分开两个版本并在右值处理中判断T是否为左引用. 除此之外与static\_cast<T\&\&>无差别.
-
-\subsection{\tt{using}}
-
+测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/lrvalue_0}{\tt cpp\_c11\_lrvalue\_0}
+\subsection{<===>\color{purple}{\tt using}}
 \subsubsection{作用域导入}
-“把目标的访问权限复制到using所在的当前作用域”, 
-	使得目标 “视为等同于在当前作用域定义”
+把目标的访问权限复制到{\tt using}所在的当前作用域, 
+	使得目标 视为等同于在当前作用域定义
 
-使用 using 导入命名空间, 即使一个命名空间中的所有名字都在该作用域中可见
+使用{\tt using}导入命名空间, 即 使一个命名空间中的所有名字都在该作用域中可见
 \begin{lstlisting}[xleftmargin=5em,xrightmargin=5em]
 	using namespace std; // 导入整个命名空间到当前作用域
-	using std::cout; // 只导入某个变量到当前作用域 
+	using std::cout;     // 只导入某个变量到当前作用域 
 \end{lstlisting}
 
-在派生类中引用基类成员
-\begin{lstlisting}
+
+\begin{lstlisting}[title=在派生类中引用基类成员]
 class A{
-public:
-	void func(){cout<<val<<pval<<endl;}
-protected:
-	int val;
-private:
-	int pval;
+public:		void func();
+protected:	int val;
+private:	int pval;
 };
 
-class B:private A{//尽管派生类B对基类A是私有继承, 但通过using声明,
-public:			  //派生类的对象就可以访问基类的proteced成员变量和public成员函数
-	using A::func;//using的声明在public中, 视为在B的public中声明基类成员
-	using A::val ;//简单来说, 就是将原本继承后的private权限改为public
+class B:private A{   //尽管派生类B对基类A是私有继承, 但通过using声明,
+public:			     //派生类的对象就可以访问基类的
+					 //proteced成员变量和public成员函数
+	using A::func;   //using的声明在public中, 视为在B的public中声明基类成员
+	using A::val ;   //简单来说, 就是将原本继承后的private权限改为public
+///////////////////////	
 //public or private: //error	
-//	using A::pval;//无法对基类private成员进行using
+//	using A::pval;   //无法对基类private成员进行using
 };
 \end{lstlisting}
-
 \subsubsection{别名声明}
-通过using指定别名, 作用等同typedef
-
+通过{\tt using}指定别名, 作用等同{\tt typedef}
 \subsubsection{别名模板}
-using能够使用模板, 而typedef需要通过结构体包装
+{\tt using}能够使用模板, 而{\tt typedef}需要通过结构体包装
 \begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
 	template<typename T> using  vec = vector<T>;
 	template<typename T> struct vec {
 		typedef vector<T> type;
-		//=using vec = vector<T>;
+		or
+		using vec = vector<T>;
 	};
 	vec<int>       v_using
 	vec<int>::type v_typedef
 \end{lstlisting}
-
 \subsubsection{\tt{typename}}
-使用typedef加结构体包装的形式实现别名模板存在一个问题, 在使用此别名模板时若没有指定模板参数而是
-	传入另一个模板参数, 编译器会无法确认结构体中的这个type是不是类型.
+使用{\tt typedef}加结构体包装的形式实现别名模板存在一个问题, 在使用此别名模板时若没有指定模板参数而是
+	传入另一个模板参数, 编译器会无法确认结构体中的这个{\tt type}是不是类型.
 
-template内出现的名称如果相依于某个template参数, 称之为从属名称. 如果从属名称在class内成嵌套状, 
+{\tt template}内出现的名称如果相依于某个{\tt template}参数, 称之为从属名称. 如果从属名称在{\tt class}内成嵌套状
+	{\tt (}即通过从属名称声明的成员{\tt (::type)}在其作用域内与该从属名称也存在依赖关系{\tt )}, 
 	称为嵌套从属名称, 即无法确认为类型还是变量的名称
 
-C++规定在嵌套从属名称前加typename关键字以确定该名称是一个类型.
+{\tt C++}规定在嵌套从属名称前加{\tt typename}关键字以确定该名称是一个类型.
 \begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
   template<typename T, class U> 
   void func (T i){
@@ -678,8 +679,8 @@ C++规定在嵌套从属名称前加typename关键字以确定该名称是一个
   //	    结构体_typedef可能在某个特化的情况下存在成员type不为类型的情况
 \end{lstlisting}
 
-特例: 请使用关键字typename标识嵌套从属名称, 但不能在基类列(base class lists)和
-	成员初值列(member initialization list)中用typename修饰基类(base class), 
+特例: 请使用关键字{\tt typename}标识嵌套从属名称, 但不能在基类列{\tt (base class lists)}和
+	成员初值列{\tt (member initialization list)}中用{\tt typename}修饰基类{\tt (base class)}, 
 	这是确定的一个类型.
 
 \begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
@@ -704,48 +705,35 @@ C++规定在嵌套从属名称前加typename关键字以确定该名称是一个
 	};
 \end{lstlisting}
 
-\subsection[\tt{range for}\quad\quad $\mathbb{BASIC}$]{\color{purple}{范围循环}}
-在C++11中, 凡是支持begin,end方法的对象都可以使用范围循环, 本质上是等于迭代器遍历, 只不过细节被隐藏使得看上去更简洁.
-TODO:迭代器理解偏差
-
+测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/using_0}{\tt cpp\_c11\_using\_0}
+\subsection{<===>\color{purple}{范围循环}}
+在{\tt C++11}中, 凡是支持{\tt begin, end}方法的对象都可以使用范围循环, 本质上是等于迭代器遍历, 
+	只不过细节被隐藏使得看上去更简洁.
 \begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
-	vector<int>v;  | = for(auto it = begin(v); it != end(v); ++it)
-	for(auto n:v); |		auto n = *it;
+	vector<int>v;      | = for(auto it = begin(v); it != end(v); ++it)
+	for(auto n:v) n++; |		auto n = *it, n++;
+		
+	vector<int>v;      | = for(auto it = begin(v); it != end(v); ++it)
+	for(auto&n:v) n++; |		++*it;//(*it)++;
 \end{lstlisting}
-
 \subsubsection{\tt{begin}和\tt{end}}
-begin和end方法对内置数组类型进行了重载, 对其它对象则由对象自身实现相关的迭代器方案, 常见的标准库容器string, vector都
-	支持.begin().end()方法.
+{\tt begin}和{\tt end}方法对内置数组类型进行了重载, 对其它对象则由对象自身实现相关的迭代器方案, 常见的标准库容器{\tt string, vector}都
+	支持{\tt .begin().end()}方法.
 
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
-	template <class Tp, size_t Np>
-	Tp* begin(Tp (&array)[Np]){
-		return array;
-	}
-	template <class Tp, size_t Np>
-	Tp* end(Tp (&array)[Np]){
-		return array + Np;
-	}
-
-	template <class Cp>
-	auto begin(Cp& c) -> decltype(c.begin()){
-		return c.begin();
-	}
-	template <class Cp>
-	auto begin(const Cp& c) -> decltype(c.begin()){
-		return c.begin();
-	}
-	template <class Cp>
-	auto end(Cp& c) -> decltype(c.end()){
-		return c.end();
-	}
-	template <class Cp>
-	auto end(const Cp& c) -> decltype(c.end()){
-		return c.end();
-	}
+\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em,title=部分impl]
+	template <class Tp, size_t Np>   	template <class Tp, size_t Np> 
+	Tp* begin(Tp (&array)[Np]){			Tp* end(Tp (&array)[Np]){
+		return array;						return array + Np;
+	}									}
+    -----------------------------------------------------------------
+	template <class Cp>					template <class Cp>
+	auto begin(Cp& c) 					auto end(Cp& c) 
+	-> decltype(c.begin()){				-> decltype(c.end()){
+		return c.begin();					return c.end();
+	}									}
 \end{lstlisting}
 \subsubsection{数组指针}
-内置数组类型与指针很相似, 在很多情况下会退化成一个指针, 失去一部分信息, 无法再使用begin和end获得头尾指针
+数组类型与指针很相似, 在很多情况下会退化成一个指针, 失去一部分信息, 无法再使用{\tt begin}和{\tt end}获得头尾指针
 
 \begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
 	int a[]={1,2,3};
@@ -782,7 +770,7 @@ begin和end方法对内置数组类型进行了重载, 对其它对象则由对�
 		}
 	}
 	auto ftest3_p = [](int p[][3]){
-		//= [](int(*p)[3]) 两种写法相同
+		        //= [](int(*p)[3]) 两种写法相同
 		for(int i=0;i<3;++i){
 			for(int j=0;j<3;++j){
 				//(*(p+i))解引用得到一级指针,指向含有三个元素的数组头
@@ -790,15 +778,15 @@ begin和end方法对内置数组类型进行了重载, 对其它对象则由对�
 			}
 		}
 	};
-	ftest3_p(a);
 \end{lstlisting}
 
-\subsection[\tt{cast}\quad\quad $\mathbb{BASIC}$]{\huge\color{purple}{强制类型转换}}
-C++引入新的强制类型转换机制, 主要是为了克服C语言强制类型转换没有从形式上体现转换功能和风险不同的问题.
+参考代码见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/range_0}{\tt cpp\_c11\_range\_0}
+\subsection{\color{purple}{强制类型转换}}
+{\tt C++}引入新的强制类型转换机制, 主要是为了克服{\tt C}语言强制类型转换没有从形式上体现转换功能和风险不同的问题.
 
-C语言的类型转换, 编译器会在下面这些C++的转换方法去逐一评估, 直到挑选到合适的. 
+{\tt C}语言的类型转换, 编译器会在下面这些{\tt C++}的转换方法去逐一评估, 直到挑选到合适的. 
 
-如果想清晰确认每一步转换是怎么进行的, 使用C++式转换, 对于简单的, 嫌麻烦可由编译器代劳使用C式转换.
+如果想清晰确认每一步转换是怎么进行的, 使用{\tt C++}式转换, 对于简单的, 嫌麻烦可由编译器代劳使用{\tt C}式转换.
 
 通过对不同形式的转换进行分类命名可以更清晰分辨程序在转换过程中的具体形式, 使得出现问题时更容易找到可能与之相关的那一类
 	转换方法. 
@@ -806,9 +794,9 @@ C语言的类型转换, 编译器会在下面这些C++的转换方法去逐一�
 \columnratio{0.4}
 \begin{paracol}{2}
 	\begin{leftcolumn}
-		低风险转换方式, 不能处理具有底层const属性的类型.
+		低风险转换方式, 不能处理具有底层{\tt const}属性的类型.
 
-		常用于基本内置类型的转换, void*指针与其它类型指针的转换, 基类与派生类指针的转换.
+		常用于基本内置类型的转换, {\tt void*}指针与其它类型指针的转换, 基类与派生类指针的转换.
 	\end{leftcolumn}	
 	\begin{rightcolumn}
 		\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
@@ -826,10 +814,10 @@ void fstatic(){
 \columnratio{0.4}
 \begin{paracol}{2}
 	\begin{leftcolumn}
-		只能用于删除运算对象的底层const, 也只有这个函数可以修改对象的底层const属性.
+		只能用于删除运算对象的底层{\tt const}, 也只有这个函数可以修改对象的底层{\tt const}属性.
 
-		即将一个指向常量的指针转换成普通指针, 获得修改指向对象的权限, 此方法只适用于指向对象是非const对象, 
-			若指向对象是const则行为未定义.
+		即将一个指向常量的指针转换成普通指针, 获得修改指向对象的权限, 此方法只适用于指向对象是非{\tt const}对象, 
+			若指向对象是{\tt const}则行为未定义.
 	\end{leftcolumn}	
 	\begin{rightcolumn}
 		\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
@@ -841,12 +829,12 @@ void fconst(){
 		  			<int*>(cp);
 	(*p)++;
 
-	//未定义行为, 本环境未改变cn
 	const int  cn  = 1;
 	const int* cp2 = &cn;
 		  int* p2  = const_cast
 		  			 <int*>(cp2);
 	(*p2)++;
+	//未定义行为, 本环境未改变cn
 }
 		\end{lstlisting}
 	\end{rightcolumn}
@@ -858,9 +846,9 @@ void fconst(){
 		为运算对象的位模式提供底层重新解释, 用于进行各种不同类型的指针之间、不同类型的引用之间的转换, 
 			执行的过程是逐个比特复制的操作.
 
-		自由程度高, 可以将int*指针转成string*, 至于之后引发的错误需由自己承担.
+		自由程度高, 可以将{\tt int*}指针转成{\tt string*}, 至于之后引发的错误...
 
-		对于基类指针与派生类指针的转换不会进行地址的偏移.
+		对于基类指针与派生类指针的转换不会进行地址的偏移. 
 	\end{leftcolumn}	
 	\begin{rightcolumn}
 		\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
@@ -880,44 +868,13 @@ void freinterpret(){
 \subsubsection{\tt{dynamic\_cast}}
 TODO:dc
 
-\subsubsection{example}
+测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/cast_0}{\tt cpp\_c11\_cast\_0}
+\subsection{\color{purple}{\tt RAII}}
+\subsubsection{\color{purple}{\tt RAII}}
+{\tt resource acquisition is initialization}
 
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
-	class A{
-	public:
-		float a;
-	};
-	class B{
-	public:
-		int b;
-	};
-	class C:public A,public B{
-	public:
-		int c;
-	};
-	void fdiff(){
-		C* pc  = new C;
-		pc->a  = 1;
-		pc->b  = 2;
-		pc->c  = 3;
-		B* pb  = (B*)pc;
-		B* pbs = static_cast<B*>(pc);
-		B* pbr = reinterpret_cast<B*>(pc);
-		B* pbd = dynamic_cast<B*>(pc);
-		cout<<"pc:" <<pc <<endl;
-		cout<<"pb:" <<pb <<'-'<<pb->b <<endl;
-		cout<<"pbs:"<<pbs<<'-'<<pbs->b<<endl;
-		cout<<"pbr:"<<pbr<<'-'<<pbr->b<<endl;
-		cout<<"pbd:"<<pbd<<'-'<<pbd->b<<endl;
-		//pc:0x12be068f0
-		//pb:0x12be068f8-2
-		//pbs:0x12be068f8-2
-		//pbr:0x12be068f0-1065353216
-		//pbd:0x12be068f8-2
-	}
-\end{lstlisting}
+资源获取即变量初始化, 与之对应的便是变量析构即资源释放. 即将需要手动释放的堆资源转换成自动析构的栈对象.
 
-reinterpret\_cast转换后的B类指针指向原先C类指针pc指向的类内首地址也是类A的首地址.
+{\tt RAII}要求, 资源的有效期与持有资源的对象的生命期严格绑定, 即由对象的构造函数完成资源的分配(获取), 
+同时由对象的析构函数, 完成资源的释放. 在这种要求下, 只要对象能正确地析构, 就不会出现资源泄露问题.
 
-对得到的这个pbr指针按B类的方式获取类内对象b, 按照类内分布进行地址偏移得到b, 然而此时pbr实际指向地址还是C的地址
-	, 即A的首地址, 三个类内分布又相同, 偏移后得到的是类A中的a, 并且按照b的属性int去解释, 得到例子中的结果.

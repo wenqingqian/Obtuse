@@ -5,6 +5,7 @@
 \usepackage{xeCJK}
 \usepackage{xeCJKfntef}
 \usepackage{listings}
+\usepackage{titleref}
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{subfigure}
@@ -27,6 +28,7 @@
 \usepackage{soul}
 \usepackage{tikz}
 \usepackage{lastpage} %总页数
+
 \usepackage[left=2cm, right=2cm, top=1.5cm, bottom=1.5cm,a4paper]{geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %																			   %
@@ -61,7 +63,7 @@
 \setlength{\parindent}{2em}% 缩进
 \setlength{\parskip}{1ex} % 段间距
 \definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{gray}{rgb}{0.3,0.3,0.3}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 \definecolor{tigray}{rgb}{0.96,0.96,0.96}
 \lstset{
@@ -70,8 +72,8 @@
     keywordstyle=\color{purple}\bfseries,
     identifierstyle=\color{brown!80!black},
     commentstyle=\color{gray},
-	frameround=fttt,
-	frame=trBL,
+	frameround=none,
+	frame=none,
 	language=c,
 	aboveskip=3mm,
 	belowskip=3mm,
@@ -99,17 +101,20 @@
 %----------------------------------------------------------------------------%
 %----------------------------------------------------------------------------%
 
+
+\let\Subsectionmark\subsectionmark 
+\def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
+\let\Sectionmark\sectionmark 
+\def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
 \begin{document}
 \footnotelayout{m}
-\newcommand*{\sectionname}{{\tt 1.1}基础}
-\renewcommand*{\chaptername}{\tt C++}
-\fancyhead[RE]{\sectionname}
-\fancyhead[OL]{\leftmark}
+
+\fancyhead[RE]{\Subsectionname}
+\fancyhead[OL]{\Sectionname}
 \fancyhead[LE,RO]{\tt PAGE \thepage\space of\space \pageref{LastPage}}
 \renewcommand{\footrulewidth}{0.5pt}
 \fancyfoot[CO]{\tt OBTUSE}
-\fancyfoot[CE]{\chaptername}
-
+\fancyfoot[CE]{\leftmark}
 
 \begin{titlepage}
 	\begin{center}
@@ -177,7 +182,7 @@
 %----------------------------------include DS ---------------------------------%
 \include{tex_include/chapter5_DS.tex}
 %----------------------------------include DB ---------------------------------%
-\include{tex_include/chapter6_DB.tex}
-
+\include{tex_include/chapter6_MySQL.tex}
+\include{tex_include/chapter7_Redis.tex}
 
 \end{document}
