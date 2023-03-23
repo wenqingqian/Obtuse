@@ -869,8 +869,9 @@ void freinterpret(){
 TODO:dc
 
 测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/cast_0}{\tt cpp\_c11\_cast\_0}
-\subsection{\color{purple}{\tt RAII}}
+\subsection{\color{purple}{智能指针}}
 \subsubsection{\color{purple}{\tt RAII}}
+
 {\tt resource acquisition is initialization}
 
 资源获取即变量初始化, 与之对应的便是变量析构即资源释放. 即将需要手动释放的堆资源转换成自动析构的栈对象.
@@ -878,3 +879,7 @@ TODO:dc
 {\tt RAII}要求, 资源的有效期与持有资源的对象的生命期严格绑定, 即由对象的构造函数完成资源的分配(获取), 
 同时由对象的析构函数, 完成资源的释放. 在这种要求下, 只要对象能正确地析构, 就不会出现资源泄露问题.
 
+\begin{itemize}
+	\item 当函数有多个返回点，或者因异常等原因意外退出函数时，栈上对象会正常的被析构，同时将资源安全释放掉。
+			如果不用{\tt RAII}，不仅可能忘记在某个返回点写销毁代码，而且在程序异常时无法保证资源自动释放.
+\end{itemize}
