@@ -244,7 +244,7 @@ void func(char *p);
 \subsubsection{指向引用的指针, 指向指针的引用}
 对引用地址的获取行为会得到引用指向的对象的地址
 
-测试程序见 \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/basic/pointer_1}{\tt cpp\_basic\_pointer\_1}
+测试程序见 \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/basic/pointer_reference.cpp}{\tt pointer\_reference}
 
 \input{tex_include/pic_tex_include/cpp_basic_pointer_0.tex}
 \subsection{\color{purple}{{\tt const}关键字}}
@@ -402,7 +402,7 @@ class Test1 public:
 	\item 深拷贝: 将指针指向的资源深入复制了一份
 	\item 移动语义: 当原对象不再使用, 使用移动语义, 转移资源, 减少拷贝
 \end{enumerate}
-参考代码见 \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/copy_0}{\tt cpp\_c11\_copy\_0}
+参考代码见 \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/copy_move_constructor}{\tt copy\_move\_constructor}
 \subsubsection{移动语义}
 移动语义: 一个对象的资源在销毁前, 将其转移给其它对象再用起来, 这样能减少资源带来的构造开销, 程序获得更高的效能
 
@@ -611,7 +611,7 @@ T&& func(T&& t){  |	T&& func(T&& t){		  |	T&& func(T&& t){
 	会返回对右值的左引用, 因此forward分开两个版本并在右值处理中判断T是否为左引用. 除此之外与static_cast<T&&>无差别
 
 \end{lstlisting}
-测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/lrvalue_0}{\tt cpp\_c11\_lrvalue\_0}
+测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/lrvalue.cpp}{\tt lrvalue}
 \subsection{<===>\color{purple}{\tt using}}
 \subsubsection{作用域导入}
 把目标的访问权限复制到{\tt using}所在的当前作用域, 
@@ -705,7 +705,7 @@ public:			     //派生类的对象就可以访问基类的
 	};
 \end{lstlisting}
 
-测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/using_0}{\tt cpp\_c11\_using\_0}
+测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/using_typedef.cpp}{\tt using\_typedef}
 \subsection{<===>\color{purple}{范围循环}}
 在{\tt C++11}中, 凡是支持{\tt begin, end}方法的对象都可以使用范围循环, 本质上是等于迭代器遍历, 
 	只不过细节被隐藏使得看上去更简洁.
@@ -780,7 +780,7 @@ public:			     //派生类的对象就可以访问基类的
 	};
 \end{lstlisting}
 
-参考代码见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/range_0}{\tt cpp\_c11\_range\_0}
+参考代码见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/range_for.cpp}{\tt range\_for}
 \subsection{\color{purple}{强制类型转换}}
 {\tt C++}引入新的强制类型转换机制, 主要是为了克服{\tt C}语言强制类型转换没有从形式上体现转换功能和风险不同的问题.
 
@@ -868,9 +868,9 @@ void freinterpret(){
 \subsubsection{\tt{dynamic\_cast}}
 TODO:dc
 
-测试程序见: \href{https://github.com/wenqingqian/Obtuse/tree/main/test/cpp/c++11/cast_0}{\tt cpp\_c11\_cast\_0}
+测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/cast.cpp}{\tt cast}
 \subsection{\color{purple}{智能指针}}
-\subsubsection{\color{purple}{\tt RAII}}
+\subsubsection{\tt RAII}
 
 {\tt resource acquisition is initialization}
 
@@ -883,3 +883,11 @@ TODO:dc
 	\item 当函数有多个返回点，或者因异常等原因意外退出函数时，栈上对象会正常的被析构，同时将资源安全释放掉。
 			如果不用{\tt RAII}，不仅可能忘记在某个返回点写销毁代码，而且在程序异常时无法保证资源自动释放.
 \end{itemize}
+\subsubsection{异常安全}
+TODO:exception safe
+\subsubsection{\tt unique\_ptr}
+k
+\subsubsection{\tt shared\_ptr}
+k
+\subsubsection{\tt weak\_ptr}
+k
