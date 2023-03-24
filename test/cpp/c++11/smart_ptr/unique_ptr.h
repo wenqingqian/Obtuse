@@ -5,6 +5,7 @@
 #include<iostream>
 namespace obtuse{
 /*
+|-last_editor 2023_3_24
 |-default_deleter
 |-default_deleter<T[]>
 |-unique_ptr
@@ -12,6 +13,7 @@ namespace obtuse{
 |-make_unique(Args...)
 |-make_unique(size_t)
 |-make_unique with c17,20
+|-测试代码在smart_ptr中
 */
 template<class Tp>
 struct default_deleter{

@@ -886,9 +886,34 @@ TODO:dc
 \subsubsection{异常安全}
 TODO:exception safe
 \subsubsection{\tt unique\_ptr}
+智能指针就是使用{\tt RAII}方法封装的裸指针
 
-参考代码见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/unique_ptr.h}{\tt unique\_ptr}
-\subsubsection{\tt shared\_ptr}
-k
-\subsubsection{\tt weak\_ptr}
-k
+一个{\tt unique\_ptr}独享它指向的对象, {\tt unique\_ptr}无法被拷贝, 可以通过转移构造函数将一个{\tt unique\_ptr}所指向的
+	资源转移给另一个{\tt unique\_ptr}
+
+\begin{enumerate}
+	\item 通过将拷贝构造函数和拷贝赋值运算符设为{\tt delete}实现禁止拷贝
+	\item 三种构造方式
+	\begin{enumerate}
+		\item 直接传入一个返回指针的{\tt new}表达式
+		\item {\tt move}另一个{\tt unique\_ptr}
+		\item {\tt make\_unique}返回一个{\tt unique\_ptr}型临时变量, 相当于第二种构造方式
+	\end{enumerate}
+	\item 两个主要函数
+	\begin{enumerate}
+		\item {\tt reset} 将指针指向新的资源, 释放原有资源
+		\item {\tt release} 放弃资源的控制权, 将资源指针返回
+	\end{enumerate}
+\end{enumerate}
+{\tt test}中实现了一个简易{\tt unique\_ptr}可以清晰看出智能指针{\tt unique\_ptr}的结构, 
+	参考代码见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/unique_ptr.h}{\tt unique\_ptr}
+\subsubsection{\tt shared\_ptr and weak\_ptr}
+
+
+
+{\tt test}中实现了一个简易{\tt shared\_ptr}可以清晰看出智能指针{\tt shared\_ptr}的结构
+
+标准库的{\tt shared\_ptr}实现为用原子操作实现的线程安全, {\tt test}中为非线程安全
+
+参考代码见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/shared_ptr.h}{\tt shared\_ptr}
+

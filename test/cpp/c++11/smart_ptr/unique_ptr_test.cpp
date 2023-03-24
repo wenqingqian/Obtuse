@@ -62,7 +62,10 @@ struct List
         head = unique_ptr<Node>(new Node{data, std::move(head)});
     }
 };
- 
+void test(unique_ptr<int> &p)
+{
+    *p = 10;
+}
 int main()
 {
     std::cout << "1) Unique ownership semantics demo\n";
@@ -122,4 +125,11 @@ int main()
  
         std::cout << "1'000'000 bottles of beer on the wall...\n";
     } // destroys all the beers
+
+	std::cout << "\n" "7) unique_ptr as function argu\n";
+	{
+		unique_ptr<int> up(new int(42));
+		test(up);
+		std::cout<<*up<<std::endl;//输出10
+	}
 }
