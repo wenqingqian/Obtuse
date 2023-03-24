@@ -3,7 +3,7 @@
 
 ##部分代码实现
 
-&nsp [unique_ptr](./test/cpp/c%2B%2B11/smart_ptr/unique_ptr.h)
+&nbsp [unique_ptr](./test/cpp/c%2B%2B11/smart_ptr/unique_ptr.h)
 
 - 实现了自定义删除器和make_unique
 - 省略自定义指针pointer
