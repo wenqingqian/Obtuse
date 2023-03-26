@@ -4,12 +4,12 @@
 #include<type_traits>
 #include<iostream>
 namespace obtuse{
+	//所有都不支持比较运算符
 /*
-|-last_editor 2023_3_24
 |-default_deleter
 |-default_deleter<T[]>
 |-unique_ptr
-|-unique-ptr<T[]>
+|-unique_ptr<T[]>
 |-make_unique(Args...)
 |-make_unique(size_t)
 |-make_unique with c17,20
@@ -21,6 +21,7 @@ struct default_deleter{
 
 	template<class U>
 	default_deleter(const default_deleter<U>&) noexcept{}
+
 	void operator()(Tp* ptr) const noexcept{
 		delete ptr;
 	}
@@ -49,17 +50,17 @@ private:
     Tp* ptr;
 	Dp  deleter;
 public:
-	//construstor
+//construstor
+	//default
     constexpr unique_ptr() noexcept :ptr(nullptr) {}
 
     constexpr unique_ptr(std::nullptr_t) noexcept :ptr(nullptr) {}
-
+	//new
 	explicit unique_ptr (Tp* p) noexcept :ptr(p) {}
-
+	//new with deleter
 	unique_ptr (Tp* p, Dp d) noexcept :ptr(p),deleter(d) {}
-
+	//move
 	unique_ptr(unique_ptr&& u) noexcept :ptr(u.release()),deleter(u.get_deleter()) {}
-
 	template<class U, class E>
 	unique_ptr(unique_ptr<U,E>&& u) noexcept :ptr(u.release()),deleter(u.get_deleter()) {}
 
@@ -68,7 +69,6 @@ public:
 		deleter=u.get_deleter();
         return *this;
     }
-
 	template<class U, class E>
 	unique_ptr& operator =(unique_ptr<U,E>&& u) noexcept{
         reset(u.release());
@@ -76,7 +76,7 @@ public:
         return *this;
     }
 
-	//usual function
+//usual function
 	Tp* get() const noexcept{
 		return ptr;
 	}
@@ -105,7 +105,7 @@ public:
         reset();
     }
 
-	//operator overload
+//operator overload
 	unique_ptr& operator = (std::nullptr_t) noexcept{
 		reset();
 		return *this;
@@ -265,7 +265,7 @@ unique_ptr<Tp> make_unique_C17(size_t n)
 }
 
 //C20
-template<typename T>
+template<class T> 
 concept IS_ARRAY = std::is_array_v<T>;
 
 template<class Tp, class... Args>
