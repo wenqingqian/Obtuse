@@ -47,7 +47,7 @@ int main()
     DEMO( cont2.use_count() );
     DEMO( cont2->memberObj.use_count() );
  
-    COUT( "GetAsMyObj" );
+    COUT( "GetAsMyObj" );//4
     shared_ptr<MyObj> myobj1 = cont->GetAsMyObj();
     DEMO( myobj1.use_count() );
     DEMO( cont.use_count() );

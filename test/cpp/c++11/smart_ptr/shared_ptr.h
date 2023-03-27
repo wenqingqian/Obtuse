@@ -34,7 +34,7 @@ template<class Tp> class enable_shared_from_this;
 struct Counter{
 private:	
 	ull_t shared_count = 1;
-	ull_t weak_count = 1;
+	ull_t weak_count = 0;
 public:
 	constexpr Counter   () noexcept {}
 
@@ -144,9 +144,11 @@ public:
 	~shared_ptr() noexcept{
 		if(!cnt) return;
 		if(cnt->release_shared()){
+			std::cout<<"destory ptr\n";
 			delete ptr;
 			ptr = nullptr;
-			if(cnt->use_weak_count()==0){
+			if(cnt && cnt->use_weak_count()==0){
+				std::cout<<"destory cnt\n";
 				delete cnt;
 				cnt = nullptr;
 			}
@@ -164,7 +166,7 @@ public:
 				*this, const_cast<rawUp*>(p)
 			);
 		} 
-	}
+	}//转换不成功则匹配下面这个版本, 接受任意参数, 不做任何行为
 	void enable_weak_this(...) noexcept {}
 
 	void swap(shared_ptr& sp) noexcept{
@@ -279,7 +281,9 @@ public:
 	~weak_ptr() noexcept{
 		if(!cnt) return;
 		if(cnt->release_weak() && cnt->use_count()==0){
+			std::cout<<cnt->use_weak_count()<<std::endl;
 			delete cnt;
+			std::cout<<"destory cnt weak\n";
 			cnt = nullptr;
 		}
 	}
@@ -305,6 +309,8 @@ public:
 	shared_ptr<Ep> lock() const noexcept{
 		return expired() ? shared_ptr<Ep>() : shared_ptr<Ep>(*this);
 	}
+
+
 };
 
 

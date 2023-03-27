@@ -272,7 +272,7 @@ void func(char *p);
 \columnratio{0.5}
 \begin{paracol}{2}
 	\begin{leftcolumn}
-		\begin{lstlisting}[title=decltype,basicstyle=\small,columns=flexible,xleftmargin=2em,xrightmargin=2em]
+		\begin{lstlisting}[title=decltype,basicstyle=\small,columns=flexible,xleftmargin=1em,xrightmargin=1em]
 int *r=0;
 decltype (*r+0) a;//表达式结果为int, 因此a为int
 decltype (r) a;//a是指针
@@ -334,7 +334,7 @@ auto &&a;(万能引用)
 左右引用只能处理对应的左右值. 一个例外是{\tt const T\&}, 既可以引用左值, 也可以引用右值
 
 \noindent 即可以写出这样的代码
-\begin{lstlisting}[basicstyle=\small,columns=flexible,xleftmargin=16em,xrightmargin=16em]
+\begin{lstlisting}[basicstyle=\small,columns=flexible,xleftmargin=14em]
 const int& clr = 1; const int& clr2 = clr;
 \end{lstlisting}
 
@@ -428,13 +428,13 @@ class Test1 public:
 template<typename T> T func(T para){}
 \end{lstlisting}
 
-\columnratio{0.3}
+\columnratio{0.25}
 \begin{paracol}{2}
 	\begin{leftcolumn}
 		因为引用与引用的对象是没有区别的, 当传入一个引用时, 无法像指针那样分辨出来.
 	\end{leftcolumn}
 	\begin{rightcolumn}
-		\begin{lstlisting}[xleftmargin=2em]
+		\begin{lstlisting}[xleftmargin=1em]
 int i = 1; func(i); -- int func<int >(int para){} 
 int&r = i; func(r); -- int func<int >(int para){}
 int*p =&i; func(p); -- int*func<int*>(int*para){} 
@@ -444,7 +444,7 @@ int*p =&i; func(p); -- int*func<int*>(int*para){}
 		所以当需要引用一个新的对象, 或是引用一个引用需要标注参数是一个引用.
 	\end{leftcolumn*}
 	\begin{rightcolumn}
-		\begin{lstlisting}[xleftmargin=2em]
+		\begin{lstlisting}[xleftmargin=1em]
 template<typename T> T& func(T& para){}
 int i = 1; func(i); -- int& func<int>(int& para){}
 int&r = i; func(r); -- int& func<int>(int& para){}
@@ -454,7 +454,7 @@ int&r = i; func(r); -- int& func<int>(int& para){}
 \end{paracol}
 
 在引入右值引用{\tt \&\&}后情况出现了区别, 此时对于一个新的模板
-\begin{lstlisting}[xleftmargin=10em,xrightmargin=10em]
+\begin{lstlisting}[xleftmargin=10em,xrightmargin=5em]
 template<typename T> T&& func(T&& para){}
 \end{lstlisting}
 
@@ -484,7 +484,7 @@ int i = 1; func(i); -- int& func<int&>(int& para){}
 \subsubsection{\tt{move}与\tt{forward}}
 
 引用移除:
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+\begin{lstlisting}
 template <class _Tp> struct remove_reference        {typedef _Tp type;};
 template <class _Tp> struct remove_reference<_Tp& > {typedef _Tp type;};
 template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
@@ -495,7 +495,7 @@ template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
 
 由于移动语义只接受右值, 对于一般对象需要将其转化为右值.
 
-\begin{lstlisting}[title=move,xleftmargin=2em,xrightmargin=2em]
+\begin{lstlisting}[title=move]
 	//原型
 	template <class _Tp>
 	typename remove_reference<_Tp>::type&&
@@ -564,13 +564,12 @@ auto&& n = func(1);
 1.				  |	2.						  | 3.
 template<class T> |	template<class T>		  |	template<class T>
 T&& func(T&& t){  |	T&& func(T&& t){		  |	T&& func(T&& t){
-	return t;	  |		return forward<T>(t); |		return static_cast<T&&>(t);
-}//error		  |	}						  |	}/*
+	return t;	  |		return forward<T>(t); |		return
+}//error		  |	}						  |		static_cast<T&&>(t);}
 			
 1.   T=int, 返回类型为int&&, 而t是左值.  
 2.3. T=int, return forward<int>(t) == return static_cast<int&&>(t)
-4.   由上可知, forward<T>跟static_cast<T&&>的作用是一样的
-	 原类型是左引用返回左引用, 原类型右引用返回右引用, 完美转发了对象
+-.   原类型是左引用返回左引用, 原类型右引用返回右引用, 完美转发了对象
 	 保持原来的左右引用关系并向下层次转化, 不再因右引用表达式是左值从而变掉
 	 当传入左值时, T=int&, 2.3. ==
 	 	int& func(int& t){ return forward/static_cast<int&>(t); }
@@ -709,7 +708,7 @@ public:			     //派生类的对象就可以访问基类的
 \subsection{<===>\color{purple}{范围循环}}
 在{\tt C++11}中, 凡是支持{\tt begin, end}方法的对象都可以使用范围循环, 本质上是等于迭代器遍历, 
 	只不过细节被隐藏使得看上去更简洁.
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em]
+\begin{lstlisting}
 	vector<int>v;      | = for(auto it = begin(v); it != end(v); ++it)
 	for(auto n:v) n++; |		auto n = *it, n++;
 		
@@ -720,7 +719,7 @@ public:			     //派生类的对象就可以访问基类的
 {\tt begin}和{\tt end}方法对内置数组类型进行了重载, 对其它对象则由对象自身实现相关的迭代器方案, 常见的标准库容器{\tt string, vector}都
 	支持{\tt .begin().end()}方法.
 
-\begin{lstlisting}[xleftmargin=2em,xrightmargin=2em,title=部分impl]
+\begin{lstlisting}[title=部分impl]
 	template <class Tp, size_t Np>   	template <class Tp, size_t Np> 
 	Tp* begin(Tp (&array)[Np]){			Tp* end(Tp (&array)[Np]){
 		return array;						return array + Np;
@@ -869,52 +868,253 @@ void freinterpret(){
 TODO:dc
 
 测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/cast.cpp}{\tt cast}
-\subsection{\color{purple}{智能指针}}
+\subsection{<===>\color{purple}{智能指针}}
 \subsubsection{\tt RAII}
 
 {\tt resource acquisition is initialization}
 
-资源获取即变量初始化, 与之对应的便是变量析构即资源释放. 即将需要手动释放的堆资源转换成自动析构的栈对象.
+资源获取即变量初始化, 与之对应的便是变量析构即资源释放. \uline{即将需要手动释放的堆资源转换成自动析构的栈对象.}
 
-{\tt RAII}要求, 资源的有效期与持有资源的对象的生命期严格绑定, 即由对象的构造函数完成资源的分配(获取), 
-同时由对象的析构函数, 完成资源的释放. 在这种要求下, 只要对象能正确地析构, 就不会出现资源泄露问题.
+{\tt RAII}要求, 资源的有效期与持有资源的对象的生命期严格绑定, 即由对象的构造函数完成资源的分配, 
+	同时由对象的析构函数, 完成资源的释放. 在这种要求下, 只要对象能正确地析构, 就不会出现资源泄露问题.
 
 \begin{itemize}
 	\item 当函数有多个返回点，或者因异常等原因意外退出函数时，栈上对象会正常的被析构，同时将资源安全释放掉。
 			如果不用{\tt RAII}，不仅可能忘记在某个返回点写销毁代码，而且在程序异常时无法保证资源自动释放.
 \end{itemize}
-\subsubsection{异常安全}
-TODO:exception safe
+
+\noindent 对于异常情况见 \nameref{cpp_c11_exception_safty}
+
 \subsubsection{\tt unique\_ptr}
-智能指针就是使用{\tt RAII}方法封装的裸指针
-
-一个{\tt unique\_ptr}独享它指向的对象, {\tt unique\_ptr}无法被拷贝, 可以通过转移构造函数将一个{\tt unique\_ptr}所指向的
-	资源转移给另一个{\tt unique\_ptr}
-
-相比于使用引用计数且实现了线程安全的{\tt shared\_ptr}, {\tt unique\_ptr}的效率更高, 在非必要情况下优先使用{\tt unique\_ptr}
+智能指针就是使用{\tt RAII}方法封装的裸指针, 智能指针不能和裸指针混用
 \begin{enumerate}
+	\item 一个{\tt unique\_ptr}独享它指向的对象, {\tt unique\_ptr}无法被拷贝, 可以通过转移构造函数将一个{\tt unique\_ptr}所指向的
+		资源转移给另一个{\tt unique\_ptr}
+	\item 相比于使用引用计数且实现了线程安全的{\tt shared\_ptr}, {\tt unique\_ptr}的效率更高, 在非必要情况下优先使用{\tt unique\_ptr}
 	\item 通过将拷贝构造函数和拷贝赋值运算符设为{\tt delete}实现禁止拷贝
-	\item 三种构造方式
+	\item 构造方式
 	\begin{enumerate}
 		\item 直接传入一个返回指针的{\tt new}表达式
 		\item {\tt move}另一个{\tt unique\_ptr}
 		\item {\tt make\_unique}返回一个{\tt unique\_ptr}型临时变量, 相当于第二种构造方式
 	\end{enumerate}
-	\item 两个主要函数
+	\item 主要函数
 	\begin{enumerate}
 		\item {\tt reset} 将指针指向新的资源, 释放原有资源
 		\item {\tt release} 放弃资源的控制权, 将资源指针返回
 	\end{enumerate}
 \end{enumerate}
-{\tt test}中实现了一个简易{\tt unique\_ptr}可以清晰看出智能指针{\tt unique\_ptr}的结构, 
+{\tt test}中实现了一个简易{\tt unique\_ptr}可以清晰看出{\tt unique\_ptr}的结构, 
 	参考代码见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/unique_ptr.h}{\tt unique\_ptr}
 \subsubsection{\tt shared\_ptr and weak\_ptr}
+当一份资源需要被多个对象共享时可能就需要使用{\tt shared\_ptr}, 相比于{\tt unique\_ptr}, {\tt shared\_ptr}的实现更为复杂
 
-
-
-{\tt test}中实现了一个简易{\tt shared\_ptr}可以清晰看出智能指针{\tt shared\_ptr}的结构
-
-标准库的{\tt shared\_ptr}实现为用原子操作实现的线程安全, {\tt test}中为非线程安全
+标准库的{\tt shared\_ptr}实现为用原子操作实现的线程安全, {\tt test}中实现了一个简易的非线程安全的
+	{\tt shared\_ptr}用以观察{\tt shared\_ptr}的大致结构
 
 参考代码见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/shared_ptr.h}{\tt shared\_ptr}
+
+\uline{大致结构以{\tt test}中{\tt shared\_ptr}为例}
+\begin{enumerate}
+\item 前提
+\begin{enumerate}
+	\item {\tt shared\_weak\_ptr}内部存储了两个指针, 本身是以栈对象的形式存在而不是指针, 通过运算符重载{\tt(->)}使其
+			\uline{在且仅在使用资源指针的时候, 智能指针本身能够像一个指针那样}(包括{\tt unique\_ptr}). 这体现在智能指针的使用方式
+			上, 对于智能指针本身的数据成员和成员函数需要使用{\tt (.)}调用, 对于资源指针指向的对象直接使用{\tt (->)}访问
+	\item 明确一点, 只有使用一个{\tt new}表达式来构造一个新的堆对象或者使用{\tt make\_shared}创建才会产生一个全新的
+			指针对\\(1.资源指针, 指向一个堆资源{\tt|}2.计数器指针, 指向一个用以记录指向该资源的{\tt shared\_ptr}, {\tt weak\_ptr}分别
+			为多少的计数器)\\除此之外无论是使用{\tt shared\_ptr}或者{\tt weak\_ptr}来初始化{\tt shared\_ptr}或者初始化{\tt weak\_} {\tt ptr}实质上
+			都没有产生新的资源, 只是不断的增加计数器中对应{\tt weak}或者{\tt shared}的数量
+	\item {\tt weak\_ptr}与{\tt shared\_ptr}的区别在于前者只是后者的辅助, 这体现在:
+	\begin{enumerate}
+		\item {\tt weak\_ptr}不能使用{\tt new}表达式来构造一个新的堆对象, 只能依附在{\tt shared\_ptr}上
+		\item {\tt weak\_ptr}与{\tt shared\_ptr}分开计数, 一个堆对象是否释放取决于指向它的{\tt shared\_ptr}的数量而与{\tt weak\_ptr}无关
+		\item 不同的是, 计数器释放需要两个指针数量都为0
+		\item 基于上两条, 想使用一个{\tt weak\_ptr}访问对象需要先检测计数器中{\tt shared}的数量是否为0, 才能确定资源是否被
+				释放, 接下来使用{\tt weak\_ptr}访问资源的通用做法是将其擢升为一个{\tt shared\_ptr}(即使用{\tt shared}中对应{\tt weak}的构造函数, 
+				这会增加{\tt shared}的计数)
+		\item 上一条末先将{\tt weak\_ptr}转为{\tt shared\_ptr}再使用的原因在于为了明确两者间的关系(前者只是后者的辅助), 不对{\tt weak\_ptr}
+				进行运算符重载(事实上资源指针作为{\tt private}成员, 在重载运算符{\tt (->)}中返回其本身), 也意味着{\tt weak\_ptr}无法访问资源, 
+				必须转为{\tt shared\_ptr}
+		\begin{lstlisting}
+bool expired() const noexcept { return cnt == nullptr || cnt->use_count() == 0; }
+//cnt为计数器指针, use_count()返回shared数量
+shared_ptr<Ep> lock() const noexcept{
+	return expired()?shared_ptr<Ep>() : shared_ptr<Ep>(*this);
+}
+		\end{lstlisting}
+	\end{enumerate}
+\end{enumerate}	
+\item {\tt Counter}
+\begin{enumerate}
+	\item 保存指向同一资源的{\tt shared}和{\tt weak}数量
+\end{enumerate}
+\item {\tt shared\_ptr}
+\begin{enumerate}
+	\item {\tt shared\_ptr}使用引用计数来维护在多个{\tt shared\_ptr}指向同一资源时依旧能正确释放资源
+	\item 引用计数使用指针(计数器类)的方式来保证各{\tt shared\_weak\_ptr}之间正确访问
+	\item 构造方式
+	\begin{enumerate}
+		\item 直接传入一个返回指针的{\tt new}表达式
+		\begin{itemize}
+			\item 创建一个计数器, {\tt shared\_count}初始化为1, {\tt weak\_count}初始化为0
+		\end{itemize}
+		\item 拷贝另一个{\tt shared\_ptr}或拷贝一个{\tt weak\_ptr}
+		\begin{itemize}
+			\item 增加{\tt shared}计数
+		\end{itemize}
+		\item {\tt move}另一个{\tt shared\_ptr}
+		\begin{itemize}
+			\item 将原{\tt shared\_ptr}的资源指针和计数指针置空
+		\end{itemize}
+		\item {\tt make\_shared}返回一个{\tt shared\_ptr}型临时变量
+	\end{enumerate}
+\end{enumerate}
+\item {\tt weak\_ptr}
+\begin{enumerate}
+	\item 构造方式
+	\begin{enumerate}
+		\item 拷贝另一个{\tt weak\_ptr}或拷贝一个{\tt shared\_ptr}
+		\begin{itemize}
+			\item 增加{\tt weak}计数
+		\end{itemize}
+		\item {\tt move}另一个{\tt shared\_ptr}
+		\begin{itemize}
+			\item 将原{\tt weak\_ptr}的资源指针和计数指针置空
+		\end{itemize}
+	\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\vspace*{1em}
+{\tt shared\_ptr}存在的问题:
+\begin{enumerate}
+	\item 环形引用
+	\begin{itemize}
+		\item 观察这样一个链表结构
+		\item 测试程序见 \href{https://github.com/wenqinqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/ring_reference_test.cpp}{{\tt smart\_ptr}文件夹}
+		\begin{lstlisting}
+struct node{ 				
+	shared_ptr<node> next;  
+};							
+shared_ptr<node> head; (1)  
+head->next = head;	   (2)	
+head.reset();		   (3)	见test
+		\end{lstlisting}
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_0.tex}
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_1.tex}
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_2.tex}
+		\item 可以看出引用计数一直在正常工作, 问题在于当栈上{\tt head}主动调用{\tt reset}进行析构, 
+				或者被动析构时, 此时引用计数为2, 因此不会释放{\tt node}, 也就不会释放{\tt next},
+				而位于堆上的{\tt next}不会自动析构, 就造成了内存泄露
+		\item 当一个含有{\tt shared\_ptr}的对象被构造在堆上, 那么{\tt shared\_ptr}本身也就在堆上, 
+				若它指向另一个堆对象, 则该堆对象析构同步于{\tt shared\_ptr}本身析构, 而{\tt shared\_ptr}
+				本身析构同步于自身所处的对象析构, 则若这两个对象是同一对象, 或者更广泛的连成一个环, 它们的析构是
+				同步的, 那么就只能主动调用其中一个{\tt shared\_ptr}进行析构才能释放, 此时这个{\tt shared\_ptr}与
+				普通指针并无区别, 一样需要主动{\tt delete}, 失去了它作为智能指针的意义
+		\item 此时我们引入{\tt weak\_ptr}, {\tt weak\_ptr}只能指向{\tt shared\_ptr}指向的对象, 而它自身不实际拥有任何对象
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_3.tex}
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_4.tex}
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_5.tex}
+	\end{itemize}
+	\item 返回对象本身的{\tt shared\_ptr}
+	\begin{itemize}
+		\item 测试程序见 \href{https://github.com/wenqinqian/Obtuse/blob/main/test/cpp/c++11/smart_ptr/shared_ptr_teset.cpp}{{\tt part4: GetAsMyObj}}
+		\begin{lstlisting}
+struct book{
+	void getshared(student* stu){
+		stu->getnewbook(shared_ptr<book>(*this));
+	}
+};
+struct student{
+	void getnewbook(shared_ptr<book> bp){
+		...
+	}
+};
+main:
+	student* stu = new student;
+	shared_ptr<book> ptr(new book);
+	ptr->getshared(stu);
+		\end{lstlisting}
+		\item 如果试图在类内创建一个该对象智能指针并传递给另一个对象, 理论上讲此时这个{\tt book}应该引用计数为2
+				, 但观察两次{\tt book}创建都是使用指针, 而指针初始化一个{\tt shared\_ptr}是会出现一个全新的指针对, 
+				这个全新体现在计数器全新, 而资源指针实际上指向同一块资源. 上述代码等同于:
+		\begin{lstlisting}
+book* bk = new book;
+shared_ptr<book> ptr(bk);
+student::shared_ptr<book> bp(bk);
+		\end{lstlisting}
+		\input{tex_include/pic_tex_include/cpp_c++11_shared_6.tex}
+		\item 这会释放两次资源, 因此事实上需要的返回操作是在对象内部返回定义在外部的智能指针, 一种实现方法
+				是引入{\tt enable\_shared\_from\_this}
+	\end{itemize}
+
+\end{enumerate}
+\subsubsection{\tt enable\_shared\_from\_this}
+TODO:侵入式
+
+一种容易想到的方法是在每一个需要返回对象智能指针的类中定义一个智能指针, 在构造一个\\{\tt shared\_ptr}的时候就
+	需要初始化类中的这个智能指针, 基于前文, 这个指针应该为{\tt weak\_ptr}
+
+更一般的, 让需要返回对象智能指针的类{\tt public}继承一个{\tt enable\_shared\_from\_this}, 
+	在这个类中有一个{\tt weak\_ptr}用于进行上述相同的操作
+\begin{lstlisting}
+templte<class Tp> class enable_shared_from_this
+private:	
+	mutable weak_ptr<Tp> weak_this;
+public:
+	template <class Up> friend class shared_ptr;
+
+    shared_ptr<Tp> shared_from_this() 
+	{ return shared_ptr<Tp>(weak_this); }
+
+struct book : enable_shared_from_this{
+	void getshared(student* stu){
+		stu->getnewbook(shared_from_this());
+	}
+};
+\end{lstlisting}
+
+而为了使用这个{\tt weak\_ptr}, 需要在构造这个对象的同时, 对其中的{\tt weak\_ptr}进行构造, 
+	可能需要一个类似这样的构造版本
+\begin{lstlisting}
+explicit shared_ptr(Tp* p , bool need_shared = false) 
+:ptr(p),cnt(new Counter) 
+{ if(need_shared) p->weak_this=(*this); }//shared_ptr是enable_shared_from_this的友元
+\end{lstlisting}
+
+更一般的, 可以进行自动判断一个类是否继承了{\tt enable\_shared\_from\_this}, 若继承, 则自然有{\tt weak\_this}
+
+上述代码就可更改为
+\begin{lstlisting}
+explicit shared_ptr(Ep* e) :ptr(e),cnt(new Counter) { enable_weak_this(e,e); }
+
+template<class Up, class Ptr> 
+enable_if_t<is_convertible_v<
+	Ptr*, const enable_shared_from_this<Up>*
+	>, /*SFINAE判断两种类型能否转换*/
+void> enable_weak_this(const enable_shared_from_this<Up>* ep, Ptr* p) noexcept{
+	using rawUp = remove_cv_t<Up>;
+	if(ep && ep->weak_this.expired()){
+		ep->weak_this = shared_ptr<rawUp>(
+			*this, const_cast<rawUp*>(p)
+		);
+	} 
+}//转换不成功则匹配下面这个版本, 接受任意参数, 不做任何行为	
+void enable_weak_this(...) noexcept {}
+\end{lstlisting}
+
+
+\subsection{\color{purple}{\tt noexcept}}
+\label{cpp_c11_exception_safty}
+
+\subsection{\color{purple}{\tt SFINAE}}
+
+
+
+
+
+
+
+
+
 

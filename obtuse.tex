@@ -1,4 +1,4 @@
-\documentclass[10pt,twoside]{ctexbook}
+\documentclass[11pt,twoside]{ctexbook}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -29,7 +29,7 @@
 \usepackage{tikz}
 \usepackage{lastpage} %总页数
 
-\usepackage[left=2cm, right=2cm, top=1.5cm, bottom=1.5cm,a4paper]{geometry}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm,a4paper]{geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %																			   %
 %																			   %
@@ -54,8 +54,16 @@
 
 \setCJKmainfont{STLibianSC-Regular}
 %
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=purple,      
+    urlcolor=purple,
+    pdftitle={Obtuse},
+    pdfpagemode=FullScreen,
+}
+
 \setmainfont{Times New Roman}
-\hypersetup{colorlinks=true,filecolor=purple,linkcolor=black,urlcolor=purple}%链接颜色
 \CTEXsetup[format={\Large\bfseries}]{section}	% 标题右对齐
 \pagestyle{fancy}
 \thispagestyle{empty}	% 去除页眉
@@ -92,9 +100,11 @@
 	tabsize=4,
 	extendedchars=false %解决代码跨页时,章节标题,页眉等汉字不显示的问题
 }
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{3} % how many sectioning levels to assign numbers to
+\setcounter{tocdepth}{3} % how many sectioning levels to show in ToC
 
-\setcounter{tocdepth}{4}
-\setcounter{secnumdepth}{3}
+%\setcounter{secnumdepth}{3}
 %标题显示深度
 %----------------------------------------------------------------------------%
 %----------------------------------------------------------------------------%
@@ -112,9 +122,10 @@
 \fancyhead[RE]{\Subsectionname}
 \fancyhead[OL]{\Sectionname}
 \fancyhead[LE,RO]{\tt PAGE \thepage\space of\space \pageref{LastPage}}
-\renewcommand{\footrulewidth}{0.5pt}
-\fancyfoot[CO]{\tt OBTUSE}
-\fancyfoot[CE]{\leftmark}
+%\renewcommand{\footrulewidth}{0.5pt}
+\fancyfoot[LO]{\tt OBTUSE}
+\fancyfoot[RE]{\leftmark}
+\fancyfoot[CO,CE]{}
 
 \begin{titlepage}
 	\begin{center}
@@ -174,15 +185,15 @@
 %----------------------------------include C++---------------------------------%
 \include{tex_include/chapter1_cpp.tex}
 %----------------------------------include OS ---------------------------------%
-\include{tex_include/chapter2_OS.tex}
+%\include{tex_include/chapter2_OS.tex}
 %----------------------------------include CN ---------------------------------%
-\include{tex_include/chapter3_CN.tex}
+%\include{tex_include/chapter3_CN.tex}
 %----------------------------------include Socket -----------------------------%
-\include{tex_include/chapter4_Socket.tex}
+%\include{tex_include/chapter4_Socket.tex}
 %----------------------------------include DS ---------------------------------%
-\include{tex_include/chapter5_DS.tex}
+%\include{tex_include/chapter5_DS.tex}
 %----------------------------------include DB ---------------------------------%
-\include{tex_include/chapter6_MySQL.tex}
-\include{tex_include/chapter7_Redis.tex}
+%\include{tex_include/chapter6_MySQL.tex}
+%\include{tex_include/chapter7_Redis.tex}
 
 \end{document}
