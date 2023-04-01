@@ -8,7 +8,7 @@
 %------------------------------------------------------------------------------------------------%
 \section{\color{blue}{基础}}
 
-\subsection{<===>\color{purple}{{\tt C}和{\tt C++}区别}}
+\subsection{\color{purple}{{\tt C}和{\tt C++}区别}}
 
 \begin{enumerate}
 	\item {\tt C}语言是{\tt C++}的子集, {\tt C++}可以很好兼容{\tt C}语言. 但是{\tt C++}又有很多新特性, 
@@ -20,7 +20,7 @@
 	\item {\tt C++}可复用性高, {\tt C++}引入了模板的概念, 后面在此基础上, 实现了方便开发的标准模板库{\tt STL}. 
 			{\tt C++}的{\tt STL}库相对于{\tt C}语言的函数库更灵活、更通用
 \end{enumerate}
-\subsection{<===>\color{purple}{{\tt C++}从代码到可执行二进制文件的过程}}
+\subsection{\color{purple}{{\tt C++}从代码到可执行二进制文件的过程}}
 \begin{enumerate}
 	\item 预编译: 这个过程主要的处理操作如下
 	\begin{enumerate}
@@ -51,7 +51,7 @@
 				生成的动态链接库, {\tt Windows}下以{\tt .dll}为后缀, {\tt Linux}下以{\tt .so}为后缀
 	\end{itemize}
 \end{enumerate}
-\subsection{<===>\color{purple}{{\tt static}关键字}}
+\subsection{\color{purple}{{\tt static}关键字}}
 \begin{enumerate}
 	\item 全局静态变量和局部静态变量: 初始化的静态变量会在数据段分配内存, 未初始化的静态变量会在{\tt BSS}段分配内存. 
 			直到程序结束, 静态变量始终会维持前值. 只不过全局静态变量和局部静态变量的作用域不一样
@@ -65,13 +65,13 @@
 			而静态成员函数不属于任何一个对象, 因此{\tt C++}规定\uline{静态成员函数没有{\tt this}指针}. 
 			既然它没有指向某一对象, 也就无法对一个对象中的非静态成员进行访问
 \end{enumerate}
-\subsection{<===>\color{purple}{{\tt extern}关键字与链接性}}
+\subsection{\color{purple}{{\tt extern}关键字与链接性}}
 
 在{\tt C++}中, 翻译单元由实现文件及直接或间接包含的所有标头组成
 
 \input{tex_include/pic_tex_include/cpp_basic_extern_0.tex}
 
-\noindent 每个翻译单元由编译器单独编译, 最终将得到的.o文件链接得到可执行文件. 如上图所示程序结构, 在链接时会出现如下问题:
+\noindent 每个翻译单元由编译器单独编译, 最终将得到的{\tt .o}文件链接得到可执行文件. 如上图所示程序结构, 在链接时会出现如下问题:
 
 假如在{\tt head.h}文件中定义一个外部链接性变量
 
@@ -87,7 +87,7 @@ int i = 0;
 
 在两个文件中都定义了具有外部链接性的变量i.
 
-在一个作用域内, 变量能且只能被定义一次, 但是可以被多次声明({\tt one define rule})
+在一个作用域内, 变量能且只能被定义一次, 但是可以被多次声明{\tt( one define rule)}
 \begin{paracol}{2}
 	\begin{leftcolumn}
 		\begin{lstlisting}[title=定义,xleftmargin=2em,xrightmargin=2em]
@@ -159,7 +159,7 @@ linkage.
 
 If, within a translation unit, the same identifier appears with both internal 
 and external linkage, the behavior is undefined.}
-\subsection{<===>\color{purple}{指针与引用}}
+\subsection{\color{purple}{指针与引用}}
 \subsubsection{指针与引用的区别}
 \begin{enumerate}
 	\item 引用就是常量指针
@@ -247,6 +247,7 @@ void func(char *p);
 测试程序见 \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/basic/pointer_reference.cpp}{\tt pointer\_reference}
 
 \input{tex_include/pic_tex_include/cpp_basic_pointer_0.tex}
+
 \subsection{\color{purple}{{\tt const}关键字}}
 \subsection{\color{purple}{{\tt malloc}和{\tt new}区别}}
 %------------------------------------------------------------------------------------------------%
@@ -267,7 +268,7 @@ void func(char *p);
 %-------------------------------------Section C++11------------------------------------%
 \section{\color{blue}{\tt C++11}}
 
-\subsection{<===>\color{purple}{\tt{decltype}和\tt{auto}}}
+\subsection{\color{purple}{\tt{decltype}和\tt{auto}}}
 
 \columnratio{0.5}
 \begin{paracol}{2}
@@ -294,7 +295,7 @@ auto &&a;(万能引用)
 		\end{lstlisting}
 	\end{rightcolumn}
 \end{paracol}
-\subsection{<===>\color{purple}{左右值}}
+\subsection{\color{purple}{左右值}}
 \subsubsection{左值与右值}
  \href{https://zhuanlan.zhihu.com/p/402251966}{原文}
 
@@ -362,7 +363,7 @@ Test&& t4 = std::forward<T&&>(t);
 		\end{lstlisting}
 	\end{rightcolumn}
 \end{paracol}
-\subsection{<===>\color{purple}{移动语义与完美转发}}
+\subsection{\color{purple}{移动语义与完美转发}}
 \subsubsection{浅拷贝与深拷贝}
 \columnratio{0.5}
 \begin{paracol}{2}
@@ -611,7 +612,7 @@ T&& func(T&& t){  |	T&& func(T&& t){		  |	T&& func(T&& t){
 
 \end{lstlisting}
 测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/lrvalue.cpp}{\tt lrvalue}
-\subsection{<===>\color{purple}{\tt using}}
+\subsection{\color{purple}{\tt using}}
 \subsubsection{作用域导入}
 把目标的访问权限复制到{\tt using}所在的当前作用域, 
 	使得目标 视为等同于在当前作用域定义
@@ -705,7 +706,7 @@ public:			     //派生类的对象就可以访问基类的
 \end{lstlisting}
 
 测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/using_typedef.cpp}{\tt using\_typedef}
-\subsection{<===>\color{purple}{范围循环}}
+\subsection{\color{purple}{范围循环}}
 在{\tt C++11}中, 凡是支持{\tt begin, end}方法的对象都可以使用范围循环, 本质上是等于迭代器遍历, 
 	只不过细节被隐藏使得看上去更简洁.
 \begin{lstlisting}
@@ -868,7 +869,7 @@ void freinterpret(){
 TODO:dc
 
 测试程序见: \href{https://github.com/wenqingqian/Obtuse/blob/main/test/cpp/c++11/cast.cpp}{\tt cast}
-\subsection{<===>\color{purple}{智能指针}}
+\subsection{\color{purple}{智能指针}}
 \subsubsection{\tt RAII}
 
 {\tt resource acquisition is initialization}
@@ -1109,12 +1110,8 @@ void enable_weak_this(...) noexcept {}
 
 \subsection{\color{purple}{\tt SFINAE}}
 
+\subsection{\color{purple}{\tt lambda}}
 
-
-
-
-
-
-
+\subsection{\color{purple}{\tt function}}
 
 
