@@ -1,5 +1,4 @@
 \newpage
-\thispagestyle{fancy}
 \setcounter{page}{1}
 \chapter{\tt C++}
 \thispagestyle{fancy}
@@ -60,10 +59,11 @@
 			类中的{\tt static}静态数据成员拥有一块单独的存储区, 而不管创建了多少个该类的对象. 
 			所有这些对象的静态数据成员都共享这一块静态存储空间
 	\item 类中的静态成员函数: 静态成员函数也是类的一部分, 而不是对象的一部分
-		\\  只能访问静态数据成员: 
-			当调用一个对象的非静态成员函数时, 系统会把该对象的起始地址赋给成员函数的this指针. 
+		\\ \\  只能访问静态数据成员: 
+			当调用一个对象的非静态成员函数时, 系统会把该对象的起始地址赋给成员函数的{\tt this}指针. 
 			而静态成员函数不属于任何一个对象, 因此{\tt C++}规定\uline{静态成员函数没有{\tt this}指针}. 
 			既然它没有指向某一对象, 也就无法对一个对象中的非静态成员进行访问
+		\\ \\  类的静态成员函数与对象无关, 对象的构造和析构都不影响静态成员函数的使用, 静态数据成员同理
 \end{enumerate}
 \subsection{\color{purple}{{\tt extern}关键字与链接性}}
 
@@ -117,7 +117,7 @@ extern int v;
 			\item {\tt const}全局变量
 			\item {\tt static}全局变量
 			\item {\tt static}函数
-			\item {\tt inline}\footnote[1]{{\tt inline} 现在表示在链接时遇到不同编译单元出现了相同签名的函数时只保留一份, 不在是內联的意思.}函数/变量\footnote[2]{{\tt inline variable is C++17 extension}}
+			\item {\tt inline}\footnote[1]{{\tt inline} 现在表示在链接时遇到不同编译单元出现了相同签名的函数时只保留一份, 不再是内联的意思.}函数/变量\footnote[2]{{\tt inline variable is C++17 extension}}
 			\item 类内定义的成员函数
 			\item 类内定义的数据成员(即非静态数据成员)
 		\end{enumerate}
@@ -159,6 +159,269 @@ linkage.
 
 If, within a translation unit, the same identifier appears with both internal 
 and external linkage, the behavior is undefined.}
+
+\subsection{\color{purple}{{\tt const}关键字}}
+\subsubsection{\tt const}
+\begin{center}
+	\begin{tabular}[b]{|l|l|l|l|}
+		\hline
+		顶层const&常量指针&int *const ptr&指针本身不能变, 即不能改变指向的对象\\
+		\hline
+		底层const&指向常量的指针&const int *ptr&不能通过该指针改变指向的对象的内容\\
+		\hline
+		&常量引用&&引用本身就是一个常量指针\\
+		\hline
+		底层const&指向常量的引用&const int \&r&相当于指向常量的常量指针\\
+		\hline
+	\end{tabular}
+\end{center}
+
+指向常量的指针或引用都可以绑定到一个常量或者变量上, 当使用指向常量的指针或引用指向一个变量时只表示无法通过该指针去改变该变量值
+
+常量只能绑定到一个指向常量的指针或引用上
+
+\noindent {\tt Note:}
+\begin{enumerate}
+	\item 顶层{\tt(top-level)const}和底层{\tt(low-level)const}的区别不在于{\tt const}所处的位置
+	\item 更一般的, 顶层const可以表示任意的对象是常量, 底层{\tt const}则与指针和引用等复合类型的基本类型部分有关
+\end{enumerate}
+
+\begin{lstlisting}[title=三种{\tt const}在开头的顶层{\tt const}]
+const int v = 0;//常量指针
+constexpr int *p = nullptr;//常量指针, 与cosnt int* p 不同
+typedef int* ptr; const ptr p = nullptr;
+\end{lstlisting}
+
+\subsubsection{不同场景下的{\tt const}}
+\begin{enumerate}
+	\item 用于修饰变量, 表明变量是个常量或指向一个常量
+	\item 用于修饰函数返回值, 如返回{\tt const}指针, 则只能赋给{\tt const}指针
+	\item 用于修饰类内函数{\tt this}指针, 在类内函数尾置{\tt const}
+	\begin{itemize}
+		\item 表明函数隐式传递的{\tt this}指针是{\tt const this}指针,
+				则函数无法改变类内非{\tt mutable}、非{\tt static}、非引用(指针)成员
+			 \\ 对于类内指针、引用成员来说相当于顶层{\tt const}, 可以改变其指向的值而不能改变其本身
+		\item 对于{\tt const}对象, 只能调用尾置{\tt const}成员函数
+	\end{itemize}
+\end{enumerate}
+\subsubsection{\tt constexpr}
+常量表达式{\tt (const expression)}是指值不会改变并且在编译过程就能得到计算结果的表达式.
+
+常见的常量表达式有字面值, 用常量表达式初始化的{\tt const}对象.
+
+{\tt constexpr}变量:\quad 用{\tt constexpr}修饰变量, 那么用来初始化这个变量的表达式必须是常量表达式, 否则报错, 其它同{\tt const}
+
+{\tt constexpr}函数:\quad 用{\tt constexpr}修饰函数, 那么只有同时满足
+\begin{enumerate}
+	\item 所有参数都是常量表达式
+	\item 返回的结果被用于常量表达式(比如用于初始化{\tt constexpr}数据)
+\end{enumerate}
+
+才会触发编译时求值. 如果只有参数是常量表达式而结果不是, 那么是否触发编译时求值取决于具体实现
+
+\subsection{\color{purple}{其它关键字}}
+\subsubsection{\tt explicit}
+用于单参数(包括多参数但只有一个参数无默认值)的构造函数首关键字, 表明构造函数不允许从参数类型到类型型的隐式转换
+\subsubsection{\tt public protected private}
+用于类内:
+\begin{enumerate}
+	\item {\tt public:} 公有的, 访问不受限制
+	\item {\tt protected:} 保护的, 只能在本类、派生类中访问
+	\item {\tt private:} 私有的, 只能在本类中访问
+\end{enumerate}
+
+用于继承:
+\begin{center}
+	\begin{tabular}[h]{|c|c|c|c|}
+		\hline
+		&{\tt public}继承&{\tt protected}继承&{\tt private}继承\\
+		\hline
+		{\tt public}成员&{\tt public}&\multirow{2}*{\tt protected}&\multirow{2}*{\tt private}\\
+		\cline{1-2}
+		{\tt protected}成员&{\tt protected}&&\\
+		\hline
+		{\tt private}成员&\multicolumn{3}{|c|}{不可访问}\\
+		\hline
+	\end{tabular}
+\end{center}
+\subsubsection{\tt final <11>}
+尾说明符
+\begin{itemize}
+	\item 用于类, 表明该类禁止被继承
+	\item 用于类成员函数, 表明该函数或虚函数禁止被覆盖
+\end{itemize}
+\subsubsection{\tt override <11>}
+尾说明符, 用于标记该虚函数是对基类虚函数的覆盖, 若该函数没有覆盖已存在的虚函数则编译器报错, 用以检查
+\subsubsection{\tt friend}
+首关键字, 友元函数与友元类, 拥有跟声明所处的类相同的成员访问权限, 不可继承, 因此权限只包括当前类和基类成员
+\subsubsection{\tt virtual}
+首关键字
+\begin{itemize}
+	\item 虚继承, 用以解决多继承时命名冲突和冗余数据的问题, 虚继承可以使得在派生类中只保留一份间接基类的成员
+	\item 虚函数, 实现动态多态, 派生类重写虚函数不需要加{\tt virtual}, 虚函数{\tt =0}时, 则为纯虚函数, 纯虚函数所在的类称为抽象类
+\end{itemize}
+\subsubsection{\tt mutable}
+\begin{itemize}
+	\item 首关键字, 用以修饰类数据成员, 可以使用{\tt const this}指针(尾{\tt const}成员函数)改变{\tt mutable}成员
+	\item 尾关键字, 用以表示{\tt lambda}函数展开成仿函数后重载运算符{\tt ()}函数是非尾{\tt const}成员函数(默认{\tt const}), 
+			从而可以改变捕获列表中按值捕获的变量
+\end{itemize}
+
+\subsubsection{\tt volatile}
+首关键字
+\begin{enumerate}
+	\item 声明为{\tt volatile}变量编译器会强制要求读内存, 相关语句不会直接使用上一条语句对应的的寄存器内容
+	\item 编译器不会对{\tt volatile}变量进行各种激进的优化，甚至将变量直接消除
+	\item 编译器层面上保证{\tt volatile}变量间的顺序性，编译器不会进行乱序优化
+	\begin{itemize}
+		\item {\tt CPU}依旧有可能乱序执行, 不同于{\tt java}
+	\end{itemize}
+\end{enumerate}
+
+\subsubsection{\tt typename}
+\begin{itemize}
+	\item 用于声明模板, 同{\tt class}
+	\item 用于表明嵌套从属名称是一个类型
+\end{itemize}
+\subsubsection{\tt new/delete}
+
+\begin{itemize}
+	\item 从自由存储区(考虑{\tt placement new})分配内存, 构造对象, 返回类类型指针
+	\item 析构对象, 从堆上释放内存
+\end{itemize}
+
+\subsubsection{\tt noexcept <11>}
+尾关键字
+
+表明函数不抛出异常
+\subsubsection{\tt inline}
+表示在链接时遇到不同编译单元出现了相同签名的函数或变量时只保留一份, 不再是内联的意思
+\subsubsection{\tt cast <11>}
+\begin{itemize}
+	\item {\tt static\_cast}用于基本类型转换
+	\item {\tt const\_cast}删除变量的{\tt const}属性
+	\item {\tt dynamic\_cast}用于将一个父类对象的指针转换为子类对象的指针或引用
+	\item {\tt reinterpret\_cast}将一种类型转换为另一种完全不同的类型
+\end{itemize}
+
+\subsubsection{\tt extern "C"}
+表示之后的代码按照{\tt C}语言的规则去编译
+
+\subsection{\color{purple}{内存布局}}
+\href{https://zhuanlan.zhihu.com/p/184957568}{原文}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.7]{tex_include/pic_include/cpp_basic_memo.jpg}
+\end{figure}
+
+\subsection{\color{purple}{内存分配}}
+\subsubsection{概览}
+\begin{center}
+	\begin{tabular}[h]{|c|c|c|c|c|}
+		\hline
+		~&{\tt new}&{\tt placement new}&{\tt operator new}&{\tt malloc}\\
+		\hline
+		性质&关键字&{\tt new}的另一种形式&\multicolumn{2}{|c|}{函数}\\
+		\hline
+		过程&\makecell[c]{1.分配内存\\2.构造对象\\3.返回对象类型指针}&
+			\makecell[c]{1.构造对象\\2.返回对象类型指针}&\multicolumn{2}{|c|}{分配内存}\\
+		\hline
+		返回类型&\multicolumn{2}{|c|}{类类型指针}&\multicolumn{2}{|c|}{{\tt void*}指针}\\
+		\hline
+		内存区域&取决于{\tt operator new}&
+			\makecell[c]{自由存储区域\\(堆栈、全局、常量等)}&\makecell[c]{一般底层是通过{\tt malloc}\\分配内存在堆上}&堆上\\
+		\hline
+		重载&\multicolumn{2}{|c|}{不可以重载}&可以重载&\\
+		\hline
+		失败返回&\multicolumn{2}{|c|}{抛出{\tt bad\_alloc}异常}& &返回{\tt null}\\
+		\hline
+	\end{tabular}
+\end{center}
+\begin{lstlisting}[title=三种创建堆上对象方法]
+struct obj{ 
+	obj(int i):n(i){}
+	int n;
+};
+//1.new
+obj* p = new obj(1);
+
+//2.malloc+placement new
+void* buf = malloc(sizeof(obj));
+obj* p = new(buf) obj(1);
+
+//3.operator new+placement new
+void* buf = ::operator new(sizeof(obj));//等于malloc
+obj* p = new(buf) obj(1);               //等于手动调用构造函数
+\end{lstlisting}
+\subsubsection{\tt new/delete and malloc/free}
+
+使用new或delete表达式的过程
+\begin{enumerate}
+	\item {\tt new}
+	\begin{enumerate}
+		\item 调用{\tt operator new(}或{\tt operator new[])}函数, 获取一块原始内存, 
+			底层可以且一般是{\tt malloc}
+		\item 编译器运行相应的构造函数构初始化对象
+		\item 返回指向该对象的对象类型指针
+	\end{enumerate}
+	\item {\tt delete}
+	\begin{enumerate}
+		\item 对指针指向的对象调用析构函数
+		\item 调用{\tt operator delete(}或{\tt operator delete[])}函数释放内存空间, 底层可以且一般是{\tt free}
+	\end{enumerate}
+\end{enumerate}
+\subsubsection{\tt placement new}
+{\tt new}表达式分为两种, {\tt new}和{\tt placement new}, 两种表达式的区别在于会调用不同的{\tt operator new}函数
+\begin{lstlisting}
+	1: new
+	obj* p = new obj;
+	void* operator new(size_t);
+	= operator new(sizeof(obj))
+\end{lstlisting}
+当使用{\tt new}表达式时, 会自动通过{\tt sizeof}在编译期获得类型大小, 并传递其作为其参数给{\tt operator new}函数
+\begin{lstlisting}
+	2: placement new
+	obj* p = new(address) obj;
+	void* operator new(size_t, void*); 
+\end{lstlisting}
+
+通过示例中的形式输入一个地址, 会调用这个特殊的两参数的{\tt operator new}函数, \uline{这个函数不可重载}
+
+这个函数接受一个额外的指针(地址), 指向一个已分配好的内存块, 然后直接进行{\tt new}表达式的第二步, 构造对象, 
+	并返回指向这个内存块的指针, 其意义相当于手动调用构造函数
+
+{\tt placement new}的地址, 即它指向的内存块不一定要在堆上, 因此一般来说, {\tt new}表达式从自由存储区{\tt (free store)}上为对象动态分配内存空间,
+	如通过下面代码将一个对象通过{\tt new}放在栈上
+
+\begin{lstlisting}
+class obj{
+public:
+	obj(int i):n(i){}
+	int n;
+};
+int main(){
+	int add; // add所在位置即已分配栈内存
+	obj* p = new(&add) obj(3);
+	//&add = p
+}
+\end{lstlisting}
+这种{\tt new}出来的对象不能像普通堆对象那样使用{\tt delete}
+
+
+\subsubsection{{\tt new}重载}
+
+\begin{itemize}
+	\item 重载{\tt new/delete}是指重载{\tt operator new}函数而不是重载{\tt new}表达式, 因为{\tt new}本质是一个关键字而不是运算符
+	\item 重载{\tt operator new}的意义是不使用默认的内存分配实现(如{\tt malloc}), 自定义内存分配器
+	\item {\tt placement new}调用的那个版本的{\tt operator new}函数不能重载
+	\item 对于重载{\tt operator new}函数必须定义于类作用域或全局作用域中
+	\item 因为{\tt operator new}用于对象构造前, 
+			{\tt operator delete}用于对象析构后, 函数与对象无关, 如果位于类作用域即
+			在类内重载{\tt operator new}那么它是隐式{\tt static}的, 
+			因此类内重载的{\tt operator new/delete}无法访问类内非{\tt static}成员
+	\item 可以通过{\tt::operator new}来调用全局的默认的{\tt operator new}函数
+\end{itemize}
+
 \subsection{\color{purple}{指针与引用}}
 \subsubsection{指针与引用的区别}
 \begin{enumerate}
@@ -248,14 +511,14 @@ void func(char *p);
 
 \input{tex_include/pic_tex_include/cpp_basic_pointer_0.tex}
 
-\subsection{\color{purple}{{\tt const}关键字}}
-\subsection{\color{purple}{{\tt malloc}和{\tt new}区别}}
+
 %------------------------------------------------------------------------------------------------%
 %-------------------------------------Section object-oriented---------------------------%
 %------------------------------------------------------------------------------------------------%
+\begin{comment}
 \section{\color{blue}{面向对象}}
 
-\subsection[多态的实现原理和应用场景]{\color{purple}{多态的实现原理和应用场景}}
+\subsection{\color{purple}{多态的实现原理和应用场景}}
 %------------------------------------------------------------------------------------------------%
 %-------------------------------------Section STL---------------------------------------%
 %------------------------------------------------------------------------------------------------%
@@ -263,7 +526,7 @@ void func(char *p);
 
 \subsection{\color{purple}{线程安全的实现及标准容器库的线程安全性}}
 \subsection{\color{purple}{{\tt sort}算法是怎么实现的}}
-
+\end{comment}
 %------------------------------------------------------------------------------------------------%
 %-------------------------------------Section C++11------------------------------------%
 \section{\color{blue}{\tt C++11}}
@@ -486,9 +749,9 @@ int i = 1; func(i); -- int& func<int&>(int& para){}
 
 引用移除:
 \begin{lstlisting}
-template <class _Tp> struct remove_reference        {typedef _Tp type;};
-template <class _Tp> struct remove_reference<_Tp& > {typedef _Tp type;};
-template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
+template <class Tp> struct remove_reference        {typedef Tp type;};
+template <class Tp> struct remove_reference<Tp& > {typedef Tp type;};
+template <class Tp> struct remove_reference<Tp&&> {typedef Tp type;};
 \end{lstlisting}
 将类型转化为{\tt remove\_reference::type}时, 根据原类型自动选择合适的版本并得到去掉引用后的类型. 一般是在模板
 	中传递模板参数时可以将模板参数转化成无引用类型
@@ -498,10 +761,10 @@ template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
 
 \begin{lstlisting}[title=move]
 	//原型
-	template <class _Tp>
-	typename remove_reference<_Tp>::type&&
-	move(_Tp&& __t) noexcept{
-		return static_cast<typename remove_reference<_Tp>::type&&>(__t);
+	template <class Tp>
+	typename remove_reference<Tp>::type&&
+	move(Tp&& __t) noexcept{
+		return static_cast<typename remove_reference<Tp>::type&&>(__t);
 	}
 	//传入为左值:
 	int i = 1; int&& r = move(i);
@@ -537,18 +800,18 @@ template <class _Tp> struct remove_reference<_Tp&&> {typedef _Tp type;};
 
 \begin{lstlisting}[xleftmargin=2em,xrightmargin=2em,title={\tt forward}]
 	//处理左值作为左引用或者右引用
-	template <class _Tp>
-	_Tp&&
-	forward(typename remove_reference<_Tp>::type& __t) noexcept{
-		return static_cast<_Tp&&>(__t);
+	template <class Tp>
+	Tp&&
+	forward(typename remove_reference<Tp>::type& __t) noexcept{
+		return static_cast<Tp&&>(__t);
 	}
 	//处理右值作为右引用
-	template <class _Tp>
-	_Tp&&
-	forward(typename remove_reference<_Tp>::type&& __t) noexcept{
-		static_assert(!is_lvalue_reference<_Tp>::value,
+	template <class Tp>
+	Tp&&
+	forward(typename remove_reference<Tp>::type&& __t) noexcept{
+		static_assert(!is_lvalue_reference<Tp>::value,
 					"can not forward an rvalue as an lvalue");
-		return static_cast<_Tp&&>(__t);
+		return static_cast<Tp&&>(__t);
 	}
 	//底层都是static_cast<T&&>(t)
 	//需要显示传递模板参数
@@ -880,8 +1143,8 @@ TODO:dc
 	同时由对象的析构函数, 完成资源的释放. 在这种要求下, 只要对象能正确地析构, 就不会出现资源泄露问题.
 
 \begin{itemize}
-	\item 当函数有多个返回点，或者因异常等原因意外退出函数时，栈上对象会正常的被析构，同时将资源安全释放掉。
-			如果不用{\tt RAII}，不仅可能忘记在某个返回点写销毁代码，而且在程序异常时无法保证资源自动释放.
+	\item 当函数有多个返回点, 或者因异常等原因意外退出函数时, 栈上对象会正常的被析构, 同时将资源安全释放掉. 
+			如果不用{\tt RAII}, 不仅可能忘记在某个返回点写销毁代码, 而且在程序异常时无法保证资源自动释放.
 \end{itemize}
 
 \noindent 对于异常情况见 \nameref{cpp_c11_exception_safty}
@@ -917,76 +1180,76 @@ TODO:dc
 
 \uline{大致结构以{\tt test}中{\tt shared\_ptr}为例}
 \begin{enumerate}
-\item 前提
-\begin{enumerate}
-	\item {\tt shared\_weak\_ptr}内部存储了两个指针, 本身是以栈对象的形式存在而不是指针, 通过运算符重载{\tt(->)}使其
-			\uline{在且仅在使用资源指针的时候, 智能指针本身能够像一个指针那样}(包括{\tt unique\_ptr}). 这体现在智能指针的使用方式
-			上, 对于智能指针本身的数据成员和成员函数需要使用{\tt (.)}调用, 对于资源指针指向的对象直接使用{\tt (->)}访问
-	\item 明确一点, 只有使用一个{\tt new}表达式来构造一个新的堆对象或者使用{\tt make\_shared}创建才会产生一个全新的
-			指针对\\(1.资源指针, 指向一个堆资源{\tt|}2.计数器指针, 指向一个用以记录指向该资源的{\tt shared\_ptr}, {\tt weak\_ptr}分别
-			为多少的计数器)\\除此之外无论是使用{\tt shared\_ptr}或者{\tt weak\_ptr}来初始化{\tt shared\_ptr}或者初始化{\tt weak\_} {\tt ptr}实质上
-			都没有产生新的资源, 只是不断的增加计数器中对应{\tt weak}或者{\tt shared}的数量
-	\item {\tt weak\_ptr}与{\tt shared\_ptr}的区别在于前者只是后者的辅助, 这体现在:
+	\item 前提
 	\begin{enumerate}
-		\item {\tt weak\_ptr}不能使用{\tt new}表达式来构造一个新的堆对象, 只能依附在{\tt shared\_ptr}上
-		\item {\tt weak\_ptr}与{\tt shared\_ptr}分开计数, 一个堆对象是否释放取决于指向它的{\tt shared\_ptr}的数量而与{\tt weak\_ptr}无关
-		\item 不同的是, 计数器释放需要两个指针数量都为0
-		\item 基于上两条, 想使用一个{\tt weak\_ptr}访问对象需要先检测计数器中{\tt shared}的数量是否为0, 才能确定资源是否被
-				释放, 接下来使用{\tt weak\_ptr}访问资源的通用做法是将其擢升为一个{\tt shared\_ptr}(即使用{\tt shared}中对应{\tt weak}的构造函数, 
-				这会增加{\tt shared}的计数)
-		\item 上一条末先将{\tt weak\_ptr}转为{\tt shared\_ptr}再使用的原因在于为了明确两者间的关系(前者只是后者的辅助), 不对{\tt weak\_ptr}
-				进行运算符重载(事实上资源指针作为{\tt private}成员, 在重载运算符{\tt (->)}中返回其本身), 也意味着{\tt weak\_ptr}无法访问资源, 
-				必须转为{\tt shared\_ptr}
-		\begin{lstlisting}
+		\item {\tt shared\_weak\_ptr}内部存储了两个指针, 本身是以栈对象的形式存在而不是指针, 通过运算符重载{\tt(->)}使其
+				\uline{在且仅在使用资源指针的时候, 智能指针本身能够像一个指针那样}(包括{\tt unique\_ptr}). 这体现在智能指针的使用方式
+				上, 对于智能指针本身的数据成员和成员函数需要使用{\tt (.)}调用, 对于资源指针指向的对象直接使用{\tt (->)}访问
+		\item 明确一点, 只有使用一个{\tt new}表达式来构造一个新的堆对象或者使用{\tt make\_shared}创建才会产生一个全新的
+				指针对\\(1.资源指针, 指向一个堆资源{\tt|}2.计数器指针, 指向一个用以记录指向该资源的{\tt shared\_ptr}, {\tt weak\_ptr}分别
+				为多少的计数器)\\除此之外无论是使用{\tt shared\_ptr}或者{\tt weak\_ptr}来初始化{\tt shared\_ptr}或者初始化{\tt weak\_} {\tt ptr}实质上
+				都没有产生新的资源, 只是不断的增加计数器中对应{\tt weak}或者{\tt shared}的数量
+		\item {\tt weak\_ptr}与{\tt shared\_ptr}的区别在于前者只是后者的辅助, 这体现在:
+		\begin{enumerate}
+			\item {\tt weak\_ptr}不能使用{\tt new}表达式来构造一个新的堆对象, 只能依附在{\tt shared\_ptr}上
+			\item {\tt weak\_ptr}与{\tt shared\_ptr}分开计数, 一个堆对象是否释放取决于指向它的{\tt shared\_ptr}的数量而与{\tt weak\_ptr}无关
+			\item 不同的是, 计数器释放需要两个指针数量都为0
+			\item 基于上两条, 想使用一个{\tt weak\_ptr}访问对象需要先检测计数器中{\tt shared}的数量是否为0, 才能确定资源是否被
+					释放, 接下来使用{\tt weak\_ptr}访问资源的通用做法是将其擢升为一个{\tt shared\_ptr}(即使用{\tt shared}中对应{\tt weak}的构造函数, 
+					这会增加{\tt shared}的计数)
+			\item 上一条末先将{\tt weak\_ptr}转为{\tt shared\_ptr}再使用的原因在于为了明确两者间的关系(前者只是后者的辅助), 不对{\tt weak\_ptr}
+					进行运算符重载(事实上资源指针作为{\tt private}成员, 在重载运算符{\tt (->)}中返回其本身), 也意味着{\tt weak\_ptr}无法访问资源, 
+					必须转为{\tt shared\_ptr}
+			\begin{lstlisting}
 bool expired() const noexcept { return cnt == nullptr || cnt->use_count() == 0; }
 //cnt为计数器指针, use_count()返回shared数量
 shared_ptr<Ep> lock() const noexcept{
 	return expired()?shared_ptr<Ep>() : shared_ptr<Ep>(*this);
 }
-		\end{lstlisting}
-	\end{enumerate}
-\end{enumerate}	
-\item {\tt Counter}
-\begin{enumerate}
-	\item 保存指向同一资源的{\tt shared}和{\tt weak}数量
-\end{enumerate}
-\item {\tt shared\_ptr}
-\begin{enumerate}
-	\item {\tt shared\_ptr}使用引用计数来维护在多个{\tt shared\_ptr}指向同一资源时依旧能正确释放资源
-	\item 引用计数使用指针(计数器类)的方式来保证各{\tt shared\_weak\_ptr}之间正确访问
-	\item 构造方式
+			\end{lstlisting}
+		\end{enumerate}
+	\end{enumerate}	
+	\item {\tt Counter}
 	\begin{enumerate}
-		\item 直接传入一个返回指针的{\tt new}表达式
-		\begin{itemize}
-			\item 创建一个计数器, {\tt shared\_count}初始化为1, {\tt weak\_count}初始化为0
-		\end{itemize}
-		\item 拷贝另一个{\tt shared\_ptr}或拷贝一个{\tt weak\_ptr}
-		\begin{itemize}
-			\item 增加{\tt shared}计数
-		\end{itemize}
-		\item {\tt move}另一个{\tt shared\_ptr}
-		\begin{itemize}
-			\item 将原{\tt shared\_ptr}的资源指针和计数指针置空
-		\end{itemize}
-		\item {\tt make\_shared}返回一个{\tt shared\_ptr}型临时变量
+		\item 保存指向同一资源的{\tt shared}和{\tt weak}数量
 	\end{enumerate}
-\end{enumerate}
-\item {\tt weak\_ptr}
-\begin{enumerate}
-	\item 构造方式
+	\item {\tt shared\_ptr}
 	\begin{enumerate}
-		\item 拷贝另一个{\tt weak\_ptr}或拷贝一个{\tt shared\_ptr}
-		\begin{itemize}
-			\item 增加{\tt weak}计数
-		\end{itemize}
-		\item {\tt move}另一个{\tt shared\_ptr}
-		\begin{itemize}
-			\item 将原{\tt weak\_ptr}的资源指针和计数指针置空
-		\end{itemize}
+		\item {\tt shared\_ptr}使用引用计数来维护在多个{\tt shared\_ptr}指向同一资源时依旧能正确释放资源
+		\item 引用计数使用指针(计数器类)的方式来保证各{\tt shared\_weak\_ptr}之间正确访问
+		\item 构造方式
+		\begin{enumerate}
+			\item 直接传入一个返回指针的{\tt new}表达式
+			\begin{itemize}
+				\item 创建一个计数器, {\tt shared\_count}初始化为1, {\tt weak\_count}初始化为0
+			\end{itemize}
+			\item 拷贝另一个{\tt shared\_ptr}或拷贝一个{\tt weak\_ptr}
+			\begin{itemize}
+				\item 增加{\tt shared}计数
+			\end{itemize}
+			\item {\tt move}另一个{\tt shared\_ptr}
+			\begin{itemize}
+				\item 将原{\tt shared\_ptr}的资源指针和计数指针置空
+			\end{itemize}
+			\item {\tt make\_shared}返回一个{\tt shared\_ptr}型临时变量
+		\end{enumerate}
+	\end{enumerate}
+	\item {\tt weak\_ptr}
+	\begin{enumerate}
+		\item 构造方式
+		\begin{enumerate}
+			\item 拷贝另一个{\tt weak\_ptr}或拷贝一个{\tt shared\_ptr}
+			\begin{itemize}
+				\item 增加{\tt weak}计数
+			\end{itemize}
+			\item {\tt move}另一个{\tt shared\_ptr}
+			\begin{itemize}
+				\item 将原{\tt weak\_ptr}的资源指针和计数指针置空
+			\end{itemize}
+		\end{enumerate}
 	\end{enumerate}
 \end{enumerate}
-\end{enumerate}
-\vspace*{1em}
+
 {\tt shared\_ptr}存在的问题:
 \begin{enumerate}
 	\item 环形引用
@@ -1104,14 +1367,205 @@ void> enable_weak_this(const enable_shared_from_this<Up>* ep, Ptr* p) noexcept{
 void enable_weak_this(...) noexcept {}
 \end{lstlisting}
 
+文内代码见附录\space\nameref{appendix_code}\space\nameref{appendix_code_smart_ptr}
 
 \subsection{\color{purple}{\tt noexcept}}
 \label{cpp_c11_exception_safty}
+参考{\tt effective c++}条款29
+\subsubsection{基本异常安全保证}
+如果异常抛出
+\begin{enumerate}
+	\item 程序内任何事物仍然保持在有效状态下, 没有任何对象或数据结构会因此而败坏
+	\item 没有发生内存泄漏
+	\item 不保证程序的前后状态不改变
+\end{enumerate}
 
+如使用智能指针代替裸指针
+\subsubsection{强异常安全保证}
+\begin{enumerate}
+	\item 程序前后状态不改变
+	\item 没有发生内存泄漏
+\end{enumerate}
+
+常见方法是{\tt copy and swap}, 对数据建一个副本, 将可能发生异常的操作使用这个副本, 
+	成功后再将副本与原数据进行交换, 就能保证除非程序运行成功, 否则数据不会改变
+
+根据具体场景选择合适的异常安全保证
+\subsubsection{不抛掷异常保证}
+在函数尾部添加{\tt noexcept}标识符, 承诺函数绝不抛出异常
+
+{\tt noexcept}语义表达该函数应该不会抛出异常, \uline{让编译器不必多生成保护栈上对象安全析构的代码}
+
+因此, 对于不抛掷异常保证函数一旦抛出异常就会立即终止进程而不再会被捕捉异常, 也可用于定位异常
 \subsection{\color{purple}{\tt SFINAE}}
+\href{https://zhuanlan.zhihu.com/p/338822185}{原文}
 
-\subsection{\color{purple}{\tt lambda}}
+在{\tt C++}中针对不同参数类型做函数重载时, 编译器需要为一个调用选择一个最适合的函数,
+	当这些重载函数包含模板函数时, 编译器一般会执行如下步骤
+\begin{enumerate}
+	\item 确定模板参数类型
+	\item 将函数参数列表和返回值的模板参数替换掉{\tt (substitute)}
+	\item 根据规则决定哪一个函数最匹配
+	\item 但是替换的结果可能是毫无意义的. 这时, 编译器不会报错, 反而会忽略这个函数模板
+\end{enumerate}
 
-\subsection{\color{purple}{\tt function}}
+这个原则叫做{\tt: SFINAE(substitution failure is not an error)}
 
+即使最终不需要被实例化的模板也要进行替换(不然就无法执行上面的第3步). 
+	不过它只会替换直接出现在函数声明中的相关内容(不包含函数体)
+
+\subsubsection{\tt enable\_if}
+常见的{\tt SFINAE}实现方法, {\tt std::enable\_if<expr,type>}是一种类型萃取{\tt(type trait)}, 
+	会根据给定的一个编译时期的表达式(第一个参数)来确定其行为
+\begin{itemize}
+	\item 如果这个表达式为{\tt true, std::enable\_if<>::type}会返回
+	\begin{itemize}
+		\item 如果没有第二个模板参数, 返回类型是{\tt void}
+		\item 否则, 返回类型是其第二个参数的类型
+	\end{itemize}
+	\item 如果表达式结果{\tt false, std::enable\_if<>::type}不会被定义
+		\\这会导致包含{\tt std::enable\_if<>}的模板被忽略掉
+\end{itemize}
+\begin{lstlisting}
+template <bool, class Tp = void> struct enable_if {};
+template <class Tp> struct enable_if<true, Tp> {typedef Tp type;};
+
+template <bool Bp, class Tp = void> 
+using enable_if_t = typename enable_if<Bp, Tp>::type;
+\end{lstlisting}
+
+通过这种方法可以实现类似这样的效果
+\begin{lstlisting}
+template<typename T, typename = enable_if_t<is_same_v<T,int>>>
+void fun(T t) { cout<<1; }
+//enable_if放在模板中只用于替换时类型判断, 不需要实际意义因此typename匿名
+//或者
+template<typename T>
+enable_if_t<is_same_v<T,int>> fun(T t) { cout<<1; }
+//模板替换成功后enable_if正好返回void
+
+void fun(...) { cout<<2; }
+\end{lstlisting}
+当传入参数是{\tt int}类型时, {\tt enable\_if}才有成员{\tt type}的定义, 否则函数模板会被忽略, 从而匹配另一个重载函数
+\subsection{\color{purple}{函数}}
+\subsubsection{函数指针}
+函数指针与函数的区别
+\begin{enumerate}
+	\item 函数指针本身存储在内存中的栈或堆中, 指向的函数存储在代码段中
+	\item 函数指针是一个变量, 而函数本身不是变量, 它是一个代码段
+	\item 函数指针可以作为函数参数、返回值或者变量使用, 而函数只能作为函数调用时使用
+	\item 函数指针可以动态地指向不同的函数, 而函数则固定指向特定的代码段
+	\item 函数指针可以通过函数指针的赋值修改它所指向的函数, 而函数本身不支持这种操作
+\end{enumerate}
+
+函数在以下情况下会变成函数指针
+\begin{enumerate}
+	\item 当函数名作为参数传递给另一个函数时, 函数名会自动转换为函数指针
+	\item 当函数指针被赋值为函数名时, 函数名会自动转换为函数指针
+	\item 当函数指针作为返回值返回时, 返回的是函数指针而不是函数本身
+\end{enumerate}
+
+\subsubsection{仿函数}
+\columnratio{0.5}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		\begin{lstlisting}
+struct test{
+	test(int c):c(c){}
+	int c;
+	void operator()(int a,int b){
+		cout<<a+b+c;
+	}
+};
+int main(){
+	int a=1,b=2,c=3;
+	test t(c);
+	t(a,b);
+}
+			\end{lstlisting}
+	\end{leftcolumn}
+	\begin{rightcolumn}
+		通过在结构体中重载()运算符可以使一个结构体对象像函数那样去工作, 
+			类外其它数据传递可以通过构造函数的方式去捕获而不是全部通过参数传递.
+	\end{rightcolumn}
+\end{paracol}
+
+\subsubsection{{\tt lambda}}
+{\tt lambda}也叫匿名仿函数, 通过一种特殊的语法规则能够简化仿函数的使用
+
+一个完整的{\tt lambda}示例
+\begin{lstlisting}
+[capture] (input_type para) option -> return_type { function body; };
+[capture] (input_type para) \*     可省略       *\ { function body; };
+\end{lstlisting}
+这样一个{\tt lambda}函数本身是一个右值, 可以将其传递给一个左值, 或者直接调用
+\begin{lstlisting}
+auto f = [capture] (input_type para) option -> return_type { function body; };
+
+[](int a){cout<<a;}(1);
+\end{lstlisting}
+
+实际上它等同于这样一个仿函数
+
+\begin{lstlisting}
+struct lambda_random_label{
+	lambda_random_label(capture):capture{}
+	return_type operator()(input_type para)option{
+		function body;
+	}
+};
+lambda_random_label f = [capture] (input_type para) { function body; };
+//f就是这个匿名的lambda结构体的一个实例
+\end{lstlisting}
+
+其中{\tt capture}分为按值捕获{\tt[\&]}和按引用捕获{\tt[=]}, 区别在于函数体内能否改变外部的值
+
+{\tt lambda}中的{\tt option}可以写{\tt mutable}或者不填, 如果不填则则重载的运算符的{\tt option}是{\tt const}, 此时无法更改捕获列表
+	中按值捕获的值
+
+{\tt lambda}函数能够自动推断返回值类别, 一般情况下不需要添加尾返回类型, 除非返回值存在需要类型转换的情况, 
+	如同时存在返回{\tt int}和{\tt bool}的情况需要指明返回{\tt int}还是{\tt bool}, 即使在明确指明{\tt lambda}
+	的类型是一个具体的{\tt function<()>}情况下依旧会面临这个问题, 因为是先有的{\tt lambda}, 将其赋给{\tt function<()>},而不是{\tt lambda}
+	本身就是这样一个类型, 其返回类型还是要自动判断或者尾返回类型指定
+
+如果需要递归调用, 除了参数列表中传递{\tt self}的方法, 可以将{\tt lambda}赋给一个显式类型{\tt function}, 并捕获自身
+\subsubsection{{\tt function}}
+对于C++中几种可调用对象, 如函数、函数指针、仿函数、lambda等
+
+虽然它们可能使用方式相同即接收参数类型相同,返回值类型也相同, 但事实上是完全不同的对象类型, 
+	函数和函数指针都可以当作函数指针类型使用, 而仿函数和lambda是一个类类型
+
+如果想把这些看似一样的函数对象放在一起就会遇到问题
+\begin{lstlisting}
+int f1(int i,int j){return i+j;}
+auto f2 = [](int i,int j){return i+j;};
+vector<int(*)(int,int)> funv;
+funv.emplace_back(f1);
+funv.emplace_back(f2);//error lambda不是函数指针
+\end{lstlisting}
+
+通过{\tt function<()>}可以将所有的函数对象转换成相同的类型
+\begin{lstlisting}
+int f1(int i,int j){return i+j;}
+auto f2 = [](int i,int j){return i+j;};
+int (*f3)(int,int) = f1;
+vector<function<int(int,int)>> funv;
+funv.emplace_back(f1);
+funv.emplace_back(f2);
+funv.emplace_back(f3);
+\end{lstlisting}
+
+对于函数重载时, {\tt function<()>}无法判别两个同名函数究竟是传入谁, {\tt function<()>}自身指明的类型不会
+	用于对传入的函数对象类型进行判断和修饰, 根据函数重载的规则, 编译器自身也无法在没有传参的情况下就判断调用的函数版本
+\begin{lstlisting}
+	int f(int i,int j){return i+j;}
+	int f(int i      ){return i;}
+	
+	function<int(int)> fun = f;//error <overloaded function type>
+
+	int (*fp)(int) = f;
+	function<int(int)> fun = fp;//     <int (*)(int)>
+\end{lstlisting}
+
+可行方法是用函数指针指明是哪一个重载
 

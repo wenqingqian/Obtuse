@@ -6,8 +6,11 @@
 \usepackage{xeCJKfntef}
 \usepackage{listings}
 \usepackage{titleref}
+\usepackage{multirow}
+\usepackage{makecell}
 \usepackage{color}
 \usepackage{xcolor}
+\usepackage{appendix}
 \usepackage{subfigure}
 \usepackage{titletoc}
 \usepackage{wrapfig}
@@ -21,6 +24,7 @@
 \usepackage{graphicx}
 \usepackage{paracol}
 \usepackage{bbm}
+\usepackage{bookmark}
 \usepackage{bbold}
 \usepackage{verbatim}
 \usepackage{CJKulem}
@@ -65,8 +69,7 @@
 
 \setmainfont{Times New Roman}
 \CTEXsetup[format={\Large\bfseries}]{section}	% 标题右对齐
-\pagestyle{fancy}
-\thispagestyle{empty}	% 去除页眉
+\pagestyle{empty}
 
 \setlength{\parindent}{2em}% 缩进
 \setlength{\parskip}{1ex} % 段间距
@@ -116,6 +119,7 @@
 \def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
 \let\Sectionmark\sectionmark 
 \def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
+
 \begin{document}
 \footnotelayout{m}
 
@@ -146,60 +150,78 @@
 \let\cleardoublepage\clearpage
 \thispagestyle{empty}
 \begin{titlepage}
+	% \begin{center}
+	% 	\quad
+
+	% 	\vspace{.2\textheight}
+	% 	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+	% 	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+	% 	%uncomment if require: \path (0,522); %set diagram left start at 0, and has height of 522
+		
+	% 	%Shape: Arc [id:dp3943727375387953] 
+	% 	\draw  [draw opacity=0] (332.95,517) .. controls (332.47,517) and (331.98,517) .. (331.5,517) .. controls (192.05,517) and (79,410.44) .. (79,279) .. controls (79,147.56) and (192.05,41) .. (331.5,41) .. controls (331.68,41) and (331.86,41) .. (332.04,41) -- (331.5,279) -- cycle ; \draw   (332.95,517) .. controls (332.47,517) and (331.98,517) .. (331.5,517) .. controls (192.05,517) and (79,410.44) .. (79,279) .. controls (79,147.56) and (192.05,41) .. (331.5,41) .. controls (331.68,41) and (331.86,41) .. (332.04,41) ;  
+	% 	%Curve Lines [id:da4428105762057488] 
+	% 	\draw    (332.04,41) .. controls (513,247) and (109,278) .. (332.95,517) ;
+	% 	%Shape: Circle [id:dp5261183402750851] 
+	% 	\draw   (209,147.5) .. controls (209,140.04) and (215.04,134) .. (222.5,134) .. controls (229.96,134) and (236,140.04) .. (236,147.5) .. controls (236,154.96) and (229.96,161) .. (222.5,161) .. controls (215.04,161) and (209,154.96) .. (209,147.5) -- cycle ;
+	% 	%Shape: Circle [id:dp5452006509569032] 
+	% 	\draw   (406,376.5) .. controls (406,369.04) and (412.04,363) .. (419.5,363) .. controls (426.96,363) and (433,369.04) .. (433,376.5) .. controls (433,383.96) and (426.96,390) .. (419.5,390) .. controls (412.04,390) and (406,383.96) .. (406,376.5) -- cycle ;	
+	% 	\end{tikzpicture}		
+	% \end{center}
 	\begin{center}
 		\quad
-
+  
 		\vspace{.2\textheight}
-		\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-		\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-		%uncomment if require: \path (0,522); %set diagram left start at 0, and has height of 522
+	 	\normalsize {\tt gcc 12.2.0}
 		
-		%Shape: Arc [id:dp3943727375387953] 
-		\draw  [draw opacity=0] (332.95,517) .. controls (332.47,517) and (331.98,517) .. (331.5,517) .. controls (192.05,517) and (79,410.44) .. (79,279) .. controls (79,147.56) and (192.05,41) .. (331.5,41) .. controls (331.68,41) and (331.86,41) .. (332.04,41) -- (331.5,279) -- cycle ; \draw   (332.95,517) .. controls (332.47,517) and (331.98,517) .. (331.5,517) .. controls (192.05,517) and (79,410.44) .. (79,279) .. controls (79,147.56) and (192.05,41) .. (331.5,41) .. controls (331.68,41) and (331.86,41) .. (332.04,41) ;  
-		%Curve Lines [id:da4428105762057488] 
-		\draw    (332.04,41) .. controls (513,247) and (109,278) .. (332.95,517) ;
-		%Shape: Circle [id:dp5261183402750851] 
-		\draw   (209,147.5) .. controls (209,140.04) and (215.04,134) .. (222.5,134) .. controls (229.96,134) and (236,140.04) .. (236,147.5) .. controls (236,154.96) and (229.96,161) .. (222.5,161) .. controls (215.04,161) and (209,154.96) .. (209,147.5) -- cycle ;
-		%Shape: Circle [id:dp5452006509569032] 
-		\draw   (406,376.5) .. controls (406,369.04) and (412.04,363) .. (419.5,363) .. controls (426.96,363) and (433,369.04) .. (433,376.5) .. controls (433,383.96) and (426.96,390) .. (419.5,390) .. controls (412.04,390) and (406,383.96) .. (406,376.5) -- cycle ;	
-		\end{tikzpicture}		
-	\end{center}
-	\begin{center}
-	 	\normalsize %test on gcc 12.2.0
-		
-	 	%\vspace{2ex}
+	 	\vspace{2ex}
 	  	%\normalsize 所有实验均使用 gcc 12.2.0 编译器
 
 	  	\vfill
+
 	  	{\tt wenqq3@outlook.com}
 
 		%\vspace{2ex}
 		%\normalsize Dont pay for what u dont use
 	\end{center}
 \end{titlepage}
+\pagestyle{empty}
+\newpage
+\setcounter{page}{0}
 \thispagestyle{empty}
 \tableofcontents
-
 \thispagestyle{empty}
+
 \shadowsize=0.5mm
+\setlength{\headheight}{13.59999pt}.
 
 %----------------------------------include C++---------------------------------%
-\include{tex_include/chapter1_cpp.tex} 
-%----------------------------------include OS ---------------------------------%
-\include{tex_include/chapter2_OS.tex}
-%----------------------------------include CN ---------------------------------%
-%\include{tex_include/chapter3_CN.tex}
+\pagestyle{fancy}
+\include{tex_include/chapter_cpp.tex} 
 
-%----------------------------------include Socket -----------------------------%
-\include{tex_include/chapter4_Socket.tex}
-%----------------------------------include DS ---------------------------------%
-\include{tex_include/chapter5_DS.tex}
-%----------------------------------include DB ---------------------------------%
-\include{tex_include/chapter6_MySQL.tex}
+% %----------------------------------include OS ---------------------------------%
+% \include{tex_include/chapter_OS.tex}
 
-\include{tex_include/chapter7_Redis.tex}
-%----------------------------------include Appendix ---------------------------------%
-\include{tex_include/chapter0_appendix.tex}
+% %----------------------------------include CN ---------------------------------%
+% \include{tex_include/chapter_CN.tex}
+
+% %----------------------------------include DS ---------------------------------%
+% \include{tex_include/chapter_DS.tex}
+
+% %----------------------------------include Algo -------------------------------%
+% \include{tex_include/chapter_algo.tex}
+
+% %----------------------------------include Socket -----------------------------%
+% \include{tex_include/chapter_Socket.tex}
+
+% %----------------------------------include DB ---------------------------------%
+% \include{tex_include/chapter_DB.tex}
+
+% %----------------------------------include Pro --------------------------------%
+% \include{tex_include/chapter_project.tex}
+
+%----------------------------------include Appendix ---------------------------%
+\include{tex_include/chapter_appendix.tex}
 
 \end{document}
