@@ -66,7 +66,7 @@
 		\\ \\  类的静态成员函数与对象无关, 对象的构造和析构都不影响静态成员函数的使用, 静态数据成员同理
 \end{enumerate}
 \subsection{\color{purple}{{\tt extern}关键字与链接性}}
-
+\subsubsection{翻译单元}
 在{\tt C++}中, 翻译单元由实现文件及直接或间接包含的所有标头组成
 
 \input{tex_include/pic_tex_include/cpp_basic_extern_0.tex}
@@ -87,6 +87,7 @@ int i = 0;
 
 在两个文件中都定义了具有外部链接性的变量i.
 
+\subsubsection{外部链接}
 在一个作用域内, 变量能且只能被定义一次, 但是可以被多次声明{\tt( one define rule)}
 \begin{paracol}{2}
 	\begin{leftcolumn}
@@ -149,7 +150,7 @@ extern int v;
 \end{enumerate}
 上述原文:
 
-{\tt For an identifier declared with the storage-class specifier extern in a scope 
+For an identifier declared with the storage-class specifier extern in a scope 
 in which a prior declaration of that identifier is visible, if the prior 
 declaration specifies internal or external linkage, the linkage of the 
 identifier at the later declaration is the same as the linkage specified 
@@ -158,7 +159,33 @@ prior declaration specifies no linkage, then the identifier has external
 linkage.
 
 If, within a translation unit, the same identifier appears with both internal 
-and external linkage, the behavior is undefined.}
+and external linkage, the behavior is undefined.
+
+\subsubsection{{\tt namespace}中的链接性}
+若之前的例子中的全局变量在一个命名空间中, 则不同文件的相同的命名空间中拥有外部链接性.
+\columnratio{0.5}
+\begin{paracol}{2}
+	\begin{leftcolumn}
+		\begin{lstlisting}[xleftmargin=6em]
+//test1.cpp
+int i=2;
+					=>
+//test2.cpp
+extern int i;
+		\end{lstlisting}
+	\end{leftcolumn}
+	\begin{rightcolumn}
+		\begin{lstlisting}
+//test1.cpp
+namespace test{
+	int i=2;}
+//test2.cpp
+namespace test{
+	extern int i;}
+		\end{lstlisting}
+	\end{rightcolumn}
+\end{paracol}
+
 
 \subsection{\color{purple}{{\tt const}关键字}}
 \subsubsection{\tt const}
@@ -200,7 +227,9 @@ typedef int* ptr; const ptr p = nullptr;
 	\begin{itemize}
 		\item 表明函数隐式传递的{\tt this}指针是{\tt const this}指针,
 				则函数无法改变类内非{\tt mutable}、非{\tt static}、非引用(指针)成员
-			 \\ 对于类内指针、引用成员来说相当于顶层{\tt const}, 可以改变其指向的值而不能改变其本身
+			 \\ 简单来说, 在{\tt const this}指针视角下, 类内非{\tt mutable}、非{\tt static}
+			 	成员都是{\tt const}成员, 并且是顶层{\tt const}, 因此对于类内指针、引用成员, 
+				可以改变其指向的值而不能改变其本身
 		\item 对于{\tt const}对象, 只能调用尾置{\tt const}成员函数
 	\end{itemize}
 \end{enumerate}
@@ -263,8 +292,8 @@ typedef int* ptr; const ptr p = nullptr;
 \subsubsection{\tt mutable}
 \begin{itemize}
 	\item 首关键字, 用以修饰类数据成员, 可以使用{\tt const this}指针(尾{\tt const}成员函数)改变{\tt mutable}成员
-	\item 尾关键字, 用以表示{\tt lambda}函数展开成仿函数后重载运算符{\tt ()}函数是非尾{\tt const}成员函数(默认{\tt const}), 
-			从而可以改变捕获列表中按值捕获的变量
+	\item 尾关键字, 用以表示{\tt lambda}函数展开成仿函数后\sout{重载运算符{\tt ()}函数是非尾{\tt const}成员函数(默认{\tt const}), 
+			从而可以改变捕获列表中按值捕获的变量}, 类内成员改为{\tt mutable}成员
 \end{itemize}
 
 \subsubsection{\tt volatile}
@@ -308,10 +337,9 @@ typedef int* ptr; const ptr p = nullptr;
 表示之后的代码按照{\tt C}语言的规则去编译
 
 \subsection{\color{purple}{内存布局}}
-\href{https://zhuanlan.zhihu.com/p/184957568}{原文}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[scale=0.7]{tex_include/pic_include/cpp_basic_memo.jpg}
+	\includegraphics[scale=0.7]{tex_include/pic_include/cpp_basic_memo.png}
 \end{figure}
 
 \subsection{\color{purple}{内存分配}}
@@ -421,7 +449,12 @@ int main(){
 			因此类内重载的{\tt operator new/delete}无法访问类内非{\tt static}成员
 	\item 可以通过{\tt::operator new}来调用全局的默认的{\tt operator new}函数
 \end{itemize}
-
+\subsubsection{{\tt malloc}返回地址}
+malloc返回的申请内存的首地址之前, 用额外的字节存储了长度, 即内存块实际首地址不是返回地址
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.25]{tex_include/pic_include/cpp_basic_malloc.png}
+\end{figure}
 \subsection{\color{purple}{指针与引用}}
 \subsubsection{指针与引用的区别}
 \begin{enumerate}
@@ -1510,7 +1543,7 @@ auto f = [capture] (input_type para) option -> return_type { function body; };
 \begin{lstlisting}
 struct lambda_random_label{
 	lambda_random_label(capture):capture{}
-	return_type operator()(input_type para)option{
+	return_type operator()(input_type para){
 		function body;
 	}
 };
@@ -1520,8 +1553,12 @@ lambda_random_label f = [capture] (input_type para) { function body; };
 
 其中{\tt capture}分为按值捕获{\tt[\&]}和按引用捕获{\tt[=]}, 区别在于函数体内能否改变外部的值
 
-{\tt lambda}中的{\tt option}可以写{\tt mutable}或者不填, 如果不填则则重载的运算符的{\tt option}是{\tt const}, 此时无法更改捕获列表
-	中按值捕获的值
+{\tt lambda}中的{\tt option}可以写{\tt mutable}或者不填, 几种可能的实现
+\begin{enumerate}
+	\item 如果不填则仿函数重载运算符是默认{\tt const}函数, 此时无法更改捕获列表中按值捕获的值
+	\item 如果不填则默认按值捕获的成员为{\tt const}类型
+	\item 仿函数重载运算符是{\tt const}函数, 通过给成员加上{\tt mutable}使其可修改
+\end{enumerate}
 
 {\tt lambda}函数能够自动推断返回值类别, 一般情况下不需要添加尾返回类型, 除非返回值存在需要类型转换的情况, 
 	如同时存在返回{\tt int}和{\tt bool}的情况需要指明返回{\tt int}还是{\tt bool}, 即使在明确指明{\tt lambda}
@@ -1530,7 +1567,7 @@ lambda_random_label f = [capture] (input_type para) { function body; };
 
 如果需要递归调用, 除了参数列表中传递{\tt self}的方法, 可以将{\tt lambda}赋给一个显式类型{\tt function}, 并捕获自身
 \subsubsection{{\tt function}}
-对于C++中几种可调用对象, 如函数、函数指针、仿函数、lambda等
+对于{\tt C++}中几种可调用对象, 如函数、函数指针、仿函数、{\tt lambda}等
 
 虽然它们可能使用方式相同即接收参数类型相同,返回值类型也相同, 但事实上是完全不同的对象类型, 
 	函数和函数指针都可以当作函数指针类型使用, 而仿函数和lambda是一个类类型
